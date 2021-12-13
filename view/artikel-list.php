@@ -2,6 +2,8 @@
 
 $url = filter_input(INPUT_SERVER, "PHP_SELF", FILTER_SANITIZE_SPECIAL_CHARS);
 $method = filter_input(INPUT_SERVER, "REQUEST_METHOD", FILTER_SANITIZE_SPECIAL_CHARS);
+$cart_id = $_SESSION["email"];
+var_dump($cart_id);
 
 if ($method == "POST") {
     $validationRules = [
@@ -25,10 +27,10 @@ if ($method == "POST") {
                 $id = ["id_artikel" => $post["id_artikel"]];
                 $artikel = ArtikelDB::get($id);
 
-                if (isset($_SESSION["cart"][$artikel["id_artikel"]])) {
-                    $_SESSION["cart"][$artikel["id_artikel"]]++;
+                if (isset($_SESSION[$cart_id][$artikel["id_artikel"]])) {
+                    $_SESSION[$cart_id][$artikel["id_artikel"]]++;
                 } else {
-                    $_SESSION["cart"][$artikel["id_artikel"]] = 1;
+                    $_SESSION[$cart_id][$artikel["id_artikel"]] = 1;
                 }
                 
             } catch (Exception $exc) {
@@ -36,7 +38,7 @@ if ($method == "POST") {
             }
             break;
         case "purge_cart":
-            unset($_SESSION["cart"]);
+            unset($_SESSION[$cart_id]);
             break;
         default:
             break;
@@ -54,7 +56,8 @@ if ($method == "POST") {
 
 <p>[
 <a href="<?= BASE_URL . "artikli" ?>">Artikli</a> |
-<a href="<?= BASE_URL . "artikli/add" ?>">Dodaj artikel</a>
+<a href="<?= BASE_URL . "artikli/add" ?>">Dodaj artikel</a> |
+<a href="<?= BASE_URL . "logout" ?>">Odjava</a>
 ]</p>
 
     <div id="main">
@@ -78,16 +81,17 @@ if ($method == "POST") {
         $cena = 0;
         
         if(isset($_POST['minus'])) {
-            if($_SESSION["cart"][$_POST['minus']] > 0)
-                $_SESSION["cart"][$_POST['minus']]--;
+            if($_SESSION[$cart_id][$_POST['minus']] > 0)
+                $_SESSION[$cart_id][$_POST['minus']]--;
             }
         if(isset($_POST['plus'])) {
-            $_SESSION["cart"][$_POST['plus']]++;
+            $_SESSION[$cart_id][$_POST['plus']]++;
         }
         
-        if (isset($_SESSION["cart"])) {
+        if (isset($_SESSION[$cart_id])) {
+            var_dump($_SESSION);
             $cena = 0;
-            foreach ($_SESSION["cart"] as $id_artikel => $kolicina):
+            foreach ($_SESSION[$cart_id] as $id_artikel => $kolicina):
                   foreach ($artikli as $artikel):
                     if($id_artikel == $artikel["id_artikel"]) { 
                         $cena = $cena + ($artikel["cena"] * $kolicina) ?>

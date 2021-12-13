@@ -28,7 +28,7 @@ class ProdajalecDB extends AbstractDB{
             throw new InvalidArgumentException("Prodajalec ne obstaja");
         }
     }
-
+    
     public static function getAll() {
         return parent::query("SELECT id_prodajalec, ime, priimek, email, geslo"
                         . " FROM prodajalec"
