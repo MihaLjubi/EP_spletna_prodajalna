@@ -2,8 +2,14 @@
 
 $url = filter_input(INPUT_SERVER, "PHP_SELF", FILTER_SANITIZE_SPECIAL_CHARS);
 $method = filter_input(INPUT_SERVER, "REQUEST_METHOD", FILTER_SANITIZE_SPECIAL_CHARS);
-if(isset($_SESSION)) {
-    $cart_id = $_SESSION["email"];
+
+function role_display() {
+    if(isset($_SESSION["role"])) {
+        if($_SESSION["role"] == "stranka") 
+            echo "hidden";
+        } else {
+            echo "hidden";
+        }
 }
 
 if ($method == "POST") {
@@ -28,10 +34,10 @@ if ($method == "POST") {
                 $id = ["id_artikel" => $post["id_artikel"]];
                 $artikel = ArtikelDB::get($id);
 
-                if (isset($_SESSION[$cart_id][$artikel["id_artikel"]])) {
-                    $_SESSION[$cart_id][$artikel["id_artikel"]]++;
+                if (isset($_SESSION["cart"][$artikel["id_artikel"]])) {
+                    $_SESSION["cart"][$artikel["id_artikel"]]++;
                 } else {
-                    $_SESSION[$cart_id][$artikel["id_artikel"]] = 1;
+                    $_SESSION["cart"][$artikel["id_artikel"]] = 1;
                 }
                 
             } catch (Exception $exc) {
@@ -39,7 +45,7 @@ if ($method == "POST") {
             }
             break;
         case "purge_cart":
-            unset($_SESSION[$cart_id]);
+            unset($_SESSION["cart"]);
             break;
         default:
             break;
@@ -58,7 +64,7 @@ if ($method == "POST") {
 <p>[
 <a href="<?= BASE_URL . "artikli" ?>">Artikli</a> |
 <a href="<?= BASE_URL . "artikli/add" ?>">Dodaj artikel</a> |
-<a href="<?= BASE_URL . "logout" ?>">Odjava</a>
+<a <?php role_display()?> href="<?= BASE_URL . "logout" ?>">Odjava</a>
 ]</p>
 
     <div id="main">
@@ -71,7 +77,7 @@ if ($method == "POST") {
                     <p><?= $artikel["ime"] ?></p>
                     <p><?= $artikel["cena"] ?>€<br/>
                     <button type="submit">V košarico</button><br>
-                    <a <?php if($_SESSION["role"] == "stranka") echo "hidden" ?> href="<?= BASE_URL . "artikli/edit?id_artikel=" . $artikel["id_artikel"] ?>">Uredi</a>
+                    <a <?php role_display() ?> href="<?= BASE_URL . "artikli/edit?id_artikel=" . $artikel["id_artikel"] ?>">Uredi</a>
                 </form>
             </div>
             <?php } endforeach; ?>
@@ -83,16 +89,17 @@ if ($method == "POST") {
         $cena = 0;
         
         if(isset($_POST['minus'])) {
-            if($_SESSION[$cart_id][$_POST['minus']] > 0)
-                $_SESSION[$cart_id][$_POST['minus']]--;
+            if($_SESSION["cart"][$_POST['minus']] > 0)
+                $_SESSION["cart"][$_POST['minus']]--;
             }
         if(isset($_POST['plus'])) {
-            $_SESSION[$cart_id][$_POST['plus']]++;
+            $_SESSION["cart"][$_POST['plus']]++;
         }
         
-        if (isset($_SESSION[$cart_id])) {
+        if (isset($_SESSION["cart"])) {
+            var_dump($_SESSION);
             $cena = 0;
-            foreach ($_SESSION[$cart_id] as $id_artikel => $kolicina):
+            foreach ($_SESSION["cart"] as $id_artikel => $kolicina):
                   foreach ($artikli as $artikel):
                     if($id_artikel == $artikel["id_artikel"]) { 
                         $cena = $cena + ($artikel["cena"] * $kolicina) ?>
