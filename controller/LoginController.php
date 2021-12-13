@@ -1,6 +1,7 @@
 <?php
 
 require_once("model/ProdajalecDB.php");
+require_once("model/StrankaDB.php");
 require_once("model/ArtikelDB.php");
 require_once("ViewHelper.php");
 
@@ -10,6 +11,8 @@ class LoginController {
             if (isset($_POST['email']) && isset($_POST['geslo'])) {
                 $email = self::validate($_POST['email']);
                 $geslo = self::validate($_POST['geslo']);
+                var_dump($email);
+                var_dump($geslo);
                 
                 if (empty($email)) {
                     header("Location: login?error=Vnesite elektronski naslov");
@@ -25,6 +28,17 @@ class LoginController {
                             $found = true;
                             $_SESSION['email'] = $prodajalec["email"];
                             $_SESSION['id'] = $prodajalec["id_prodajalec"];
+                            $_SESSION['role'] = "prodajalec";
+                            header("Location: artikli");
+                        }
+                    }
+                    $stranke = StrankaDB::getAll();
+                    foreach ($stranke as $stranka) {                     
+                        if($stranka["email"] === $email && $stranka["geslo"] === $geslo) {
+                            $found = true;
+                            $_SESSION['email'] = $stranka["email"];
+                            $_SESSION['id'] = $stranka["id_stranke"];
+                            $_SESSION['role'] = "stranka";
                             header("Location: artikli");
                         }
                     }

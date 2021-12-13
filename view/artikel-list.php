@@ -3,7 +3,6 @@
 $url = filter_input(INPUT_SERVER, "PHP_SELF", FILTER_SANITIZE_SPECIAL_CHARS);
 $method = filter_input(INPUT_SERVER, "REQUEST_METHOD", FILTER_SANITIZE_SPECIAL_CHARS);
 $cart_id = $_SESSION["email"];
-var_dump($cart_id);
 
 if ($method == "POST") {
     $validationRules = [
@@ -69,7 +68,7 @@ if ($method == "POST") {
                     <p><?= $artikel["ime"] ?></p>
                     <p><?= $artikel["cena"] ?>€<br/>
                     <button type="submit">V košarico</button><br>
-                    <a href="<?= BASE_URL . "artikli/edit?id_artikel=" . $artikel["id_artikel"] ?>">Uredi</a>
+                    <a <?php if($_SESSION["role"] == "stranka") echo "hidden" ?> href="<?= BASE_URL . "artikli/edit?id_artikel=" . $artikel["id_artikel"] ?>">Uredi</a>
                 </form>
             </div>
         <?php endforeach; ?>
@@ -89,7 +88,6 @@ if ($method == "POST") {
         }
         
         if (isset($_SESSION[$cart_id])) {
-            var_dump($_SESSION);
             $cena = 0;
             foreach ($_SESSION[$cart_id] as $id_artikel => $kolicina):
                   foreach ($artikli as $artikel):
