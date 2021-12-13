@@ -29,14 +29,15 @@ class ArtikelController {
     public static function addForm($values = [
         "ime" => "",
         "cena" => "",
+        "izbrisan" => "",
     ]) {
         echo ViewHelper::render("view/artikel-add.php", $values);
     }
 
     public static function add() {
         $data = filter_input_array(INPUT_POST, self::getRules());
-
         if (self::checkValues($data)) {
+            $data["izbrisan"] = 0;
             $id = ArtikelDB::insert($data);
             echo ViewHelper::render("view/artikel-list.php", [
             "artikli" => ArtikelDB::getAll()
@@ -74,7 +75,6 @@ class ArtikelController {
             'options' => ['min_range' => 1]
         ];
         $data = filter_input_array(INPUT_POST, $rules);
-
         if (self::checkValues($data)) {
             ArtikelDB::update($data);
             echo ViewHelper::render("view/artikel-list.php", [
@@ -134,6 +134,7 @@ class ArtikelController {
         return [
             'ime' => FILTER_SANITIZE_SPECIAL_CHARS,
             'cena' => FILTER_VALIDATE_FLOAT,
+            'izbrisan' => FILTER_VALIDATE_INT,
         ];
     }
 }

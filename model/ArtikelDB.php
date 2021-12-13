@@ -5,12 +5,12 @@ require_once 'model/AbstractDB.php';
 class ArtikelDB extends AbstractDB{
     
     public static function insert(array $params) {
-        return parent::modify("INSERT INTO artikel (ime, cena) "
-                        . " VALUES (:ime, :cena)", $params);
+        return parent::modify("INSERT INTO artikel (ime, cena, izbrisan) "
+                        . " VALUES (:ime, :cena, :izbrisan)", $params);
     }
 
     public static function update(array $params) {
-        return parent::modify("update artikel set ime = :ime, cena = :cena WHERE id_artikel = :id_artikel", $params);
+        return parent::modify("update artikel set ime = :ime, cena = :cena, izbrisan = :izbrisan WHERE id_artikel = :id_artikel", $params);
     }
 
     public static function delete(array $id) {
@@ -18,7 +18,7 @@ class ArtikelDB extends AbstractDB{
     }
 
     public static function get(array $id) {
-        $artikli = parent::query("SELECT id_artikel, ime, cena"
+        $artikli = parent::query("SELECT id_artikel, ime, cena, izbrisan"
                         . " FROM artikel"
                         . " WHERE id_artikel = :id_artikel", $id);
         
@@ -30,7 +30,7 @@ class ArtikelDB extends AbstractDB{
     }
 
     public static function getAll() {
-        return parent::query("SELECT id_artikel, ime, cena"
+        return parent::query("SELECT id_artikel, ime, cena, izbrisan"
                         . " FROM artikel"
                         . " ORDER BY ime");
     }

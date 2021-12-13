@@ -2,7 +2,9 @@
 
 $url = filter_input(INPUT_SERVER, "PHP_SELF", FILTER_SANITIZE_SPECIAL_CHARS);
 $method = filter_input(INPUT_SERVER, "REQUEST_METHOD", FILTER_SANITIZE_SPECIAL_CHARS);
-$cart_id = $_SESSION["email"];
+if(isset($_SESSION)) {
+    $cart_id = $_SESSION["email"];
+}
 
 if ($method == "POST") {
     $validationRules = [
@@ -60,7 +62,8 @@ if ($method == "POST") {
 ]</p>
 
     <div id="main">
-        <?php foreach ($artikli as $artikel): ?>
+        <?php foreach ($artikli as $artikel):
+            if($artikel["izbrisan"] == 0) {?>
             <div class="artikel">
                 <form action="<?= $url ?>" method="post">
                     <input type="hidden" name="do" value="add_into_cart" />
@@ -71,7 +74,7 @@ if ($method == "POST") {
                     <a <?php if($_SESSION["role"] == "stranka") echo "hidden" ?> href="<?= BASE_URL . "artikli/edit?id_artikel=" . $artikel["id_artikel"] ?>">Uredi</a>
                 </form>
             </div>
-        <?php endforeach; ?>
+            <?php } endforeach; ?>
     </div>
 
     <div class="cart">
