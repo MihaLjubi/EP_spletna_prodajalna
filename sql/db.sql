@@ -9,7 +9,7 @@ CREATE TABLE `artikel` (
   `id_artikel` int(11) NOT NULL AUTO_INCREMENT,
   `ime` text,
   `cena` double NOT NULL,
-  `izbrisan` int, 
+  `izbrisan` text, 
   PRIMARY KEY (`id_artikel`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -21,6 +21,7 @@ CREATE TABLE `prodajalec` (
   `priimek` text NOT NULL,
   `email` text NOT NULL,
   `geslo` text NOT NULL,
+  `izbrisan` text,
   PRIMARY KEY (`id_prodajalec`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -36,13 +37,14 @@ CREATE TABLE `stranka` (
   `posta` text NOT NULL,
   `email` text NOT NULL,
   `geslo` text NOT NULL,
+  `izbrisan` text,
   PRIMARY KEY (`id_stranka`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO artikel VALUES (1, "kruh", 0.95, 0);
-INSERT INTO artikel VALUES (2, "voda", 0.33, 0);
-INSERT INTO artikel VALUES (3, "burek", 2.40, 0);
+INSERT INTO artikel VALUES (1, "kruh", 0.95, "ne");
+INSERT INTO artikel VALUES (2, "voda", 0.33, "ne");
+INSERT INTO artikel VALUES (3, "burek", 2.40, "ne");
 
-INSERT INTO prodajalec VALUES (1, "Janez", "Novak", "janez.novak@gmail.com", "geslo1");
+INSERT INTO prodajalec VALUES (1, "Janez", "Novak", "janez.novak@gmail.com", "geslo1", "ne");
 
-INSERT INTO stranka VALUES (1, "Bojan", "Breg", "dol", 11, 1000, "Ljubljana", "BB@gmail.com", "geslo321");
+INSERT INTO stranka VALUES (1, "Bojan", "Breg", "dol", 11, 1000, "Ljubljana", "BB@gmail.com", "geslo321", "ne");

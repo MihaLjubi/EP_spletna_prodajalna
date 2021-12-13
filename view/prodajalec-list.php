@@ -12,7 +12,8 @@
 ]</p>
 
 <div id="main">
-    <?php foreach ($prodajalci as $prodajalec): ?>
+    <?php foreach ($prodajalci as $prodajalec): 
+        if($prodajalec["izbrisan"] == "ne") { ?>
             <form>
                 <div class="uporabniki">
                     <p><b>Ime: </b><?= $prodajalec["ime"] ?></p>
@@ -21,5 +22,5 @@
                     <a href="<?= BASE_URL . "prodajalci/edit?id_prodajalec=" . $prodajalec["id_prodajalec"] ?>"> [Uredi] </a>
                 </div>
             </form>        
-    <?php endforeach; ?>
+    <?php } endforeach; ?>
 </div>

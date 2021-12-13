@@ -146,6 +146,7 @@ class StrankaController {
             'posta' => FILTER_SANITIZE_SPECIAL_CHARS,
             'email' => FILTER_SANITIZE_SPECIAL_CHARS,
             'geslo' => FILTER_SANITIZE_SPECIAL_CHARS,
+            'izbrisan' => FILTER_SANITIZE_SPECIAL_CHARS,
         ];
     }
 }

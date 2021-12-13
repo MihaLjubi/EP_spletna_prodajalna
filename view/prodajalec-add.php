@@ -15,5 +15,6 @@
     <p><label>Priimek: <input type="text" name="priimek" value="<?= $priimek ?>" /></label></p>
     <p><label>Email: <input type="text" name="email" value="<?= $email ?>" /></label></p>
     <p><label>Geslo: <input type="text" name="geslo" value="<?= $geslo ?>" /></label></p>
+    <input type="hidden" name="izbrisan" value="ne"/>
     <p><button>Dodaj</button></p>
 </form>

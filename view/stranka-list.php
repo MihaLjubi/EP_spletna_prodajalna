@@ -12,7 +12,8 @@
 ]</p>
 
 <div id="main">
-    <?php foreach ($stranke as $stranka): ?>
+    <?php foreach ($stranke as $stranka): 
+        if($stranka["izbrisan"] == "ne") { ?>
             <form>
                 <div class="uporabniki">
                     <p><b>Ime: </b><?= $stranka["ime"] ?></p>
@@ -22,5 +23,5 @@
                     <a href="<?= BASE_URL . "stranke/edit?id_stranka=" . $stranka["id_stranka"] ?>"> [Uredi] </a>
                 </div>
             </form>        
-    <?php endforeach; ?>
+    <?php } endforeach; ?>
 </div>

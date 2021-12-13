@@ -36,8 +36,7 @@ class ProdajalecController {
     }
 
     public static function add() {
-        $data = filter_input_array(INPUT_POST, self::getRules());
-
+        $data = filter_input_array(INPUT_POST, self::getRules());;
         if (self::checkValues($data)) {
             $id = ProdajalecDB::insert($data);
             echo ViewHelper::render("view/prodajalec-list.php", [
@@ -138,6 +137,7 @@ class ProdajalecController {
             'priimek' => FILTER_SANITIZE_SPECIAL_CHARS,
             'email' => FILTER_SANITIZE_SPECIAL_CHARS,
             'geslo' => FILTER_SANITIZE_SPECIAL_CHARS,
+            'izbrisan' => FILTER_SANITIZE_SPECIAL_CHARS,
         ];
     }
 }

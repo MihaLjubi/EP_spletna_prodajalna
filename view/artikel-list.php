@@ -69,7 +69,7 @@ if ($method == "POST") {
 
     <div id="main">
         <?php foreach ($artikli as $artikel):
-            if($artikel["izbrisan"] == 0) {?>
+            if($artikel["izbrisan"] == "ne") {?>
             <div class="artikel">
                 <form action="<?= $url ?>" method="post">
                     <input type="hidden" name="do" value="add_into_cart" />
@@ -97,7 +97,6 @@ if ($method == "POST") {
         }
         
         if (isset($_SESSION["cart"])) {
-            var_dump($_SESSION);
             $cena = 0;
             foreach ($_SESSION["cart"] as $id_artikel => $kolicina):
                   foreach ($artikli as $artikel):

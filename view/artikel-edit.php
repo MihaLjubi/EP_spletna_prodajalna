@@ -28,7 +28,7 @@
     <input type="hidden" name="id_artikel" value="<?= $artikel["id_artikel"] ?>"  />
     <input type="hidden" name="ime" value="<?= $artikel["ime"] ?>" autofocus />
     <input type="hidden" name="cena" value="<?= $artikel["cena"] ?>" />
-    <input type="hidden" name="izbrisan" value=1 />
+    <input type="hidden" name="izbrisan" value="da" />
     <button type="submit" class="important">Deaktiviraj</button>
 </form>
 
