@@ -13,6 +13,13 @@ define("CSS_URL", rtrim($_SERVER["SCRIPT_NAME"], "index.php") . "static/css/");
 $path = isset($_SERVER["PATH_INFO"]) ? trim($_SERVER["PATH_INFO"], "/") : "";
 
 $urls = [
+    "register" => function () {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            LoginController::register();
+        } else {
+            LoginController::registerForm();
+        }
+    },
     "login" => function () {
         LoginController::index();
     },

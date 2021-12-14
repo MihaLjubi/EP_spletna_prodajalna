@@ -50,7 +50,7 @@ class StrankaController {
         } else {
             self::addForm($data);
         }
-}
+    }
 
     public static function editForm($stranka = []) {
         if (empty($stranka)) {

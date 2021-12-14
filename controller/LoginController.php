@@ -62,12 +62,63 @@ class LoginController {
         echo ViewHelper::render("view/logout.php", $parameters);
     }
     
+    public static function registerForm($values = [
+        "ime" => "",
+        "priimek" => "",
+        "ulica" => "",
+        "hisna_stevilka" => "",
+        "postna_stevilka" => "",
+        "posta" => "",
+        "email" => "",
+        "geslo" => ""
+    ]) {
+        echo ViewHelper::render("view/register.php", $values);
+    }
+
+    public static function register() {
+        $data = filter_input_array(INPUT_POST, self::getRules());
+
+        if (self::checkValues($data)) {
+            $id = StrankaDB::insert($data);
+            header("Location: login");
+        } else {
+            self::addForm($data);
+        }
+    }
+    
      function validate($data){
        $data = trim($data);
        $data = stripslashes($data);
        $data = htmlspecialchars($data);
 
        return $data;
+    }
+    
+    private static function checkValues($input) {
+        if (empty($input)) {
+            return FALSE;
+        }
+
+        $result = TRUE;
+        foreach ($input as $value) {
+            $result = $result && $value != false;
+        }
+
+        return $result;
+    }
+        
+    private static function getRules() {
+        return [
+            'ime' => FILTER_SANITIZE_SPECIAL_CHARS,
+            'priimek' => FILTER_SANITIZE_SPECIAL_CHARS,
+            'ulica' => FILTER_SANITIZE_SPECIAL_CHARS,
+            'hisna_stevilka' => FILTER_SANITIZE_NUMBER_INT,
+            'postna_stevilka' => FILTER_SANITIZE_NUMBER_INT,
+            'posta' => FILTER_SANITIZE_SPECIAL_CHARS,
+            'email' => FILTER_SANITIZE_SPECIAL_CHARS,
+            'geslo' => FILTER_SANITIZE_SPECIAL_CHARS,
+            'izbrisan' => FILTER_SANITIZE_SPECIAL_CHARS,
+        ];
     }
 }
 
