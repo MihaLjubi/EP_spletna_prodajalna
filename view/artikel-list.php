@@ -93,7 +93,7 @@ if ($method == "POST") {
 
     <h1 style="margin-left: 10px">Artikli</h1>
 
-        <div id="main">
+        <div class="main">
             <?php foreach ($artikli as $artikel):
                 if($artikel["izbrisan"] == "ne") {?>
                 <div class="artikel">
@@ -142,10 +142,13 @@ if ($method == "POST") {
             }            
             ?></p>
             <p>CENA:  <?=$cena ?></p>
-            <form action="<?= $url ?>" method="post">
-                <input type="hidden" name="do" value="purge_cart"/>
-                <button>Izprazni</button>
-            </form>
+            <div style="display: flex;">
+                <form action="<?= $url ?>" method="post" style="margin-right: 10px">
+                    <input type="hidden" name="do" value="purge_cart"/>
+                    <button>Izprazni</button>
+                </form>
+                <a href="<?= BASE_URL . "narocilo/pregled" ?>"><input type="button" value="Zakljuci nakup"/></a>
+            </div>      
         </div>
 
         <script>

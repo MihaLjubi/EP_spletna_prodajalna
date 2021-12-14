@@ -1,6 +1,7 @@
-#main {
+.main {
     margin-right: auto;
     width: 70%;
+    margin-left: 10px
 }
 
 .artikel {

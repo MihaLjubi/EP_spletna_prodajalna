@@ -36,7 +36,7 @@
 
 <h1>Stranke</h1>
 
-<div id="main">
+<div class="main">
     <?php foreach ($stranke as $stranka): 
         if($stranka["izbrisan"] == "ne") { ?>
             <form>

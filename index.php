@@ -5,6 +5,7 @@ require_once("controller/LoginController.php");
 require_once("controller/ArtikelController.php");
 require_once("controller/ProdajalecController.php");
 require_once("controller/StrankaController.php");
+require_once("controller/NarociloController.php");
 
 define("BASE_URL", $_SERVER["SCRIPT_NAME"] . "/");
 define("IMAGES_URL", rtrim($_SERVER["SCRIPT_NAME"], "index.php") . "static/images/");
@@ -88,6 +89,9 @@ $urls = [
     },
     "stranke/delete" => function () {
         StrankaController::delete();
+    },
+    "narocilo/pregled" => function () {
+        NarociloController::pregled();
     },
 ];
 

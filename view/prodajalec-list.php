@@ -36,7 +36,7 @@
 
 <h1>Prodajalci</h1>
 
-<div id="main">
+<div class="main">
     <?php foreach ($prodajalci as $prodajalec): 
         if($prodajalec["izbrisan"] == "ne") { ?>
             <form>
