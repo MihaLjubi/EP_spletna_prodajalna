@@ -71,7 +71,14 @@ if ($method == "POST") {
       <li id="dropdown" class="dropdown">
         <a href="javascript:void(0)" class="dropbtn"><?= $_SESSION["ime"] ?> <?= $_SESSION["priimek"] ?></a>
         <div class="dropdown-content">
-            <a href="#">Uredi podatke</a>
+            <a href="
+                    <?php 
+                        if($_SESSION["role"] == "prodajalec") {
+                            echo BASE_URL . "prodajalci/edit?id_prodajalec=" . $_SESSION["id"];
+                        } else {
+                            echo BASE_URL . "stranke/edit?id_stranka=" . $_SESSION["id"];
+                        } 
+                    ?>">Uredi podatke</a>
             <a href="<?= BASE_URL . "logout" ?>">Odjava</a>
         </div>
       </li>
@@ -79,10 +86,10 @@ if ($method == "POST") {
       <li id="register" style="float: right"><a href="<?= BASE_URL . "register" ?>">Registracija</a></li>
     </ul>
     <input id="role" type="hidden" name="izbrisan" value="<?php if(isset($_SESSION["role"])) { 
-                    echo $_SESSION["role"];          
-                } else {
-                    echo "notlogged";
-                } ?>" />
+        echo $_SESSION["role"];          
+    } else {
+        echo "notlogged";
+    } ?>" />
 
     <h1 style="margin-left: 10px">Artikli</h1>
 
@@ -95,14 +102,14 @@ if ($method == "POST") {
                         <input type="hidden" name="id_artikel" value="<?= $artikel["id_artikel"] ?>" />
                         <p><?= $artikel["ime"] ?></p>
                         <p><?= $artikel["cena"] ?>€<br/>
-                        <button <?php role_display() ?> type="submit">V košarico</button><br>
+                        <button <?php if(!isset($_SESSION["role"])) echo "hidden" ?> type="submit">V košarico</button><br>
                         <a <?php role_display() ?> href="<?= BASE_URL . "artikli/edit?id_artikel=" . $artikel["id_artikel"] ?>">Uredi</a>
                     </form>
                 </div>
                 <?php } endforeach; ?>
         </div>
 
-        <div id="cart" class="cart">
+        <div <?php if(!isset($_SESSION["role"])) echo "hidden" ?> class="cart">
             <h3>Košarica</h3>
             <p><?php
             $cena = 0;

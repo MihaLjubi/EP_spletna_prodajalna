@@ -8,11 +8,12 @@ window.onload = function() {
     } else if (role == 'prodajalec') {
         prodajalec.forEach(element => element.style.display = 'none');
     } else {
-
+        admin.forEach(element => element.style.display = 'none');
     }
 };
 
-var notlogged = [artikli, artikliAdd, prodajalci, prodajalciAdd, stranke, strankeAdd, dropdown, cart];
+var notlogged = [artikli, artikliAdd, prodajalci, prodajalciAdd, stranke, strankeAdd, dropdown];
 var stranka = [artikliAdd, prodajalci, prodajalciAdd, stranke, strankeAdd, register, login];
 var prodajalec = [prodajalci, prodajalciAdd, register, login];
+var admin = [register, login];
 
