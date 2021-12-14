@@ -26,8 +26,9 @@ class LoginController {
                     foreach ($prodajalci as $prodajalec) {
                         if($prodajalec["email"] === $email && $prodajalec["geslo"] === $geslo) {
                             $found = true;
-                            $_SESSION['email'] = $prodajalec["email"];
                             $_SESSION['id'] = $prodajalec["id_prodajalec"];
+                            $_SESSION['ime'] = $prodajalec["ime"];
+                            $_SESSION['priimek'] = $prodajalec["priimek"];
                             $_SESSION['role'] = "prodajalec";
                             header("Location: artikli");
                         }
@@ -36,8 +37,9 @@ class LoginController {
                     foreach ($stranke as $stranka) {                     
                         if($stranka["email"] === $email && $stranka["geslo"] === $geslo) {
                             $found = true;
-                            $_SESSION['email'] = $stranka["email"];
-                            $_SESSION['id'] = $stranka["id_stranke"];
+                            $_SESSION['id'] = $stranka["id_stranka"];
+                            $_SESSION['ime'] = $stranka["ime"];
+                            $_SESSION['priimek'] = $stranka["priimek"];
                             $_SESSION['role'] = "stranka";
                             header("Location: artikli");
                         }
