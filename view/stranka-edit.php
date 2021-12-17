@@ -17,7 +17,7 @@
       <div class="dropdown-content">
           <a href="
                   <?php 
-                      if($_SESSION["role"] == "prodajalec") {
+                      if($_SESSION["role"] == "prodajalec" || $_SESSION["role"] == "admin") {
                           echo BASE_URL . "prodajalci/edit?id_prodajalec=" . $_SESSION["id"];
                       } else {
                           echo BASE_URL . "stranke/edit?id_stranka=" . $_SESSION["id"];
@@ -46,7 +46,7 @@
     <p><label>Postna stevilka: <input type="text" name="postna_stevilka" value="<?= $stranka["postna_stevilka"] ?>"/></label></p>
     <p><label>Posta: <input type="text" name="posta" value="<?= $stranka["posta"] ?>" /></label></p>
     <p><label>Email: <input type="text" name="email" value="<?= $stranka["email"] ?>" /></label></p>
-    <p><label>Geslo: <input type="text" name="geslo" value="<?= $stranka["geslo"] ?>" /></label></p>
+    <p><label>Geslo: <input type="text" name="geslo" value="" /></label></p>
     <input type="hidden" name="izbrisan" value="<?= $stranka["izbrisan"] ?>" />
     <p><button>Posodobi</button></p>
 </form>

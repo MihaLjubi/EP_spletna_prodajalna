@@ -11,8 +11,6 @@ class LoginController {
             if (isset($_POST['email']) && isset($_POST['geslo'])) {
                 $email = self::validate($_POST['email']);
                 $geslo = self::validate($_POST['geslo']);
-                var_dump($email);
-                var_dump($geslo);
                 
                 if (empty($email)) {
                     header("Location: login?error=Vnesite elektronski naslov");
@@ -29,7 +27,10 @@ class LoginController {
                             $_SESSION['id'] = $prodajalec["id_prodajalec"];
                             $_SESSION['ime'] = $prodajalec["ime"];
                             $_SESSION['priimek'] = $prodajalec["priimek"];
-                            $_SESSION['role'] = "prodajalec";
+                            if($prodajalec["email"] == 'admin@admin')
+                                $_SESSION['role'] = "admin";
+                            else
+                                $_SESSION['role'] = "prodajalec";
                             header("Location: artikli");
                         }
                     }

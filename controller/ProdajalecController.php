@@ -77,6 +77,8 @@ class ProdajalecController {
         $data = filter_input_array(INPUT_POST, $rules);
 
         if (self::checkValues($data)) {
+            $hash = password_hash($data["geslo"], PASSWORD_DEFAULT);
+            $data["geslo"] = $hash;
             ProdajalecDB::update($data);
             echo ViewHelper::render("view/prodajalec-list.php", [
             "prodajalci" => ProdajalecDB::getAll()

@@ -82,6 +82,8 @@ class StrankaController {
         $data = filter_input_array(INPUT_POST, $rules);
 
         if (self::checkValues($data)) {
+            $hash = password_hash($data["geslo"], PASSWORD_DEFAULT);
+            $data["geslo"] = $hash;
             StrankaDB::update($data);
             echo ViewHelper::render("view/stranka-list.php", [
             "stranke" => StrankaDB::getAll()

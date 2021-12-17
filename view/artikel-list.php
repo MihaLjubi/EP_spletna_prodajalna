@@ -74,7 +74,7 @@ if ($method == "POST") {
         <div class="dropdown-content">
             <a href="
                     <?php 
-                        if($_SESSION["role"] == "prodajalec") {
+                        if($_SESSION["role"] == "prodajalec" || $_SESSION["role"] == "admin") {
                             echo BASE_URL . "prodajalci/edit?id_prodajalec=" . $_SESSION["id"];
                         } else {
                             echo BASE_URL . "stranke/edit?id_stranka=" . $_SESSION["id"];
