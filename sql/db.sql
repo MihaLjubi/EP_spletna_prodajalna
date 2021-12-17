@@ -70,7 +70,7 @@ INSERT INTO prodajalec VALUES (1, "Janez", "Novak", "janez.novak@gmail.com", "ge
 INSERT INTO stranka VALUES (1, "Bojan", "Breg", "dol", 11, 1000, "Ljubljana", "BB@gmail.com", "geslo321", "ne");
 
 INSERT INTO narocilo VALUES (1, 15.32, "potrjeno");
-INSERT INTO narocilo VALUES (2, 9.78, "oddano");
+INSERT INTO narocilo VALUES (2, 9.78, "neobdelano");
 
 INSERT INTO vozicek VALUES (1, 1, 2);
 INSERT INTO vozicek VALUES (1, 2, 1);

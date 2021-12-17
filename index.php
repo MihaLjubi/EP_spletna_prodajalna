@@ -99,6 +99,9 @@ $urls = [
     "narocilo/add" => function () {
         NarociloController::add();
     },
+    "narocilo/edit" => function () {
+        NarociloController::edit();
+    },            
 ];
 
 try {

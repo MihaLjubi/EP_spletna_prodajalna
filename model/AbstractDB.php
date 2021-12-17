@@ -59,7 +59,7 @@ abstract class AbstractDB {
      * @return type Boolean
      */
     protected static function modify($sql, array $params = array()) {
-        $stmt = self::getConnection()->prepare($sql);       
+        $stmt = self::getConnection()->prepare($sql);
         $params_filtered = self::filterParams($sql, $params);
         $stmt->execute($params_filtered);
 

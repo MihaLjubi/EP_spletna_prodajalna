@@ -30,6 +30,23 @@ class NarociloController {
         }
     }
     
+    public static function edit() {
+        $rules = self::getRules();
+        $rules["id_narocilo"] = [
+            'filter' => FILTER_VALIDATE_INT,
+            'options' => ['min_range' => 1]
+        ];
+        $data = filter_input_array(INPUT_POST, $rules);       
+        if (self::checkValues($data)) {
+            NarociloDB::update($data);
+            echo ViewHelper::render("view/narocilo-list.php", [
+            "narocila" => NarociloDB::getAll()
+            ]);   
+        } else {
+            self::editForm($data);
+        }
+    }
+    
     /**
      * Returns TRUE if given $input array contains no FALSE values
      * @param type $input

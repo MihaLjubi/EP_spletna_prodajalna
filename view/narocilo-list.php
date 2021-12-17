@@ -40,15 +40,38 @@
 <div class="main">
     <?php foreach ($narocila as $narocilo): ?>
         <div style="
-             display: flex;
+            display: flex;
             justify-content: space-between;
             width: auto;
+            min-height: 100px;
             margin: 1em;
             border: 1px solid black;
             vertical-align: top;">
-            <form>
-                <p><?= $narocilo["id_narocilo"] ?> <?= $narocilo["cena"] ?>€ <?= $narocilo["status"] ?></p>
-            </form>
+                <div style="margin-left: 20px">
+                    <p><b>Cena: </b><?= $narocilo["cena"] ?>€</p>
+                    <p><b>Status: </b><?= $narocilo["status"] ?></p>
+                </div>
+                
+                <div style="margin-right: 20px">
+                    <form <?php if($narocilo["status"] != "neobdelano") echo "hidden" ?> action="<?= BASE_URL . "narocilo/edit" ?>" method="post">
+                        <input type="hidden" name="id_narocilo" value="<?= $narocilo["id_narocilo"] ?>" />
+                        <input type="hidden" name="cena" value="<?= $narocilo["cena"] ?>" />
+                        <input type="hidden" name="status" value="potrjeno" />
+                        <p><button>Potrdi</button></p>
+                    </form>
+                    <form  <?php if($narocilo["status"] != "neobdelano") echo "hidden" ?> action="<?= BASE_URL . "narocilo/edit" ?>" method="post">
+                        <input type="hidden" name="id_narocilo" value="<?= $narocilo["id_narocilo"] ?>" />
+                        <input type="hidden" name="cena" value="<?= $narocilo["cena"] ?>" />
+                        <input type="hidden" name="status" value="preklicano" />
+                        <p><button>Prekliči</button></p>
+                    </form>
+                    <form <?php if($narocilo["status"] != "potrjeno") echo "hidden" ?> action="<?= BASE_URL . "narocilo/edit" ?>" method="post">
+                        <input type="hidden" name="id_narocilo" value="<?= $narocilo["id_narocilo"] ?>" />
+                        <input type="hidden" name="cena" value="<?= $narocilo["cena"] ?>" />
+                        <input type="hidden" name="status" value="stornirano" />
+                        <p><button>Storniraj</button></p>
+                    </form>
+                </div>             
         </div>
         <?php  endforeach; ?>
 </div>

@@ -56,7 +56,7 @@ $cena = 0;
             <form action="<?= BASE_URL . "narocilo/add" ?>" method="post">
                 <input type="hidden" name="cena" value="<?= $cena ?>"  />
                 <input type="hidden" name="status" value="neobdelano" />
-                <p><button>Zaključi nakup</button></p>
+                <p><button style="margin-top: -16px;">Zaključi nakup</button></p>
             </form>   
         </div>
     </div>
