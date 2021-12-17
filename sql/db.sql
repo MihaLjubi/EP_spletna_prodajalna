@@ -25,7 +25,7 @@ CREATE TABLE `prodajalec` (
   PRIMARY KEY (`id_prodajalec`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- tabela Prodajalec
+-- tabela Stranka
 DROP TABLE IF EXISTS `stranka`;
 CREATE TABLE `stranka` (
   `id_stranka` int(11) NOT NULL AUTO_INCREMENT,
@@ -41,6 +41,26 @@ CREATE TABLE `stranka` (
   PRIMARY KEY (`id_stranka`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- table Narocilo
+DROP TABLE IF EXISTS `narocilo`;
+CREATE TABLE `narocilo` (
+  `id_narocilo` int(11) NOT NULL AUTO_INCREMENT,
+  `cena` double,
+  `status` text,
+  PRIMARY KEY (`id_narocilo`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- table Vozicek
+DROP TABLE IF EXISTS `vozicek`;
+CREATE TABLE `vozicek` (
+  `id_narocilo` int NOT NULL,
+  `id_artikel` int NOT NULL,
+  `kolicina` int,
+  PRIMARY KEY (`id_narocilo`, `id_artikel`),
+  FOREIGN KEY (`id_narocilo`) REFERENCES narocilo(`id_narocilo`),
+  FOREIGN KEY (`id_artikel`) REFERENCES artikel(`id_artikel`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 INSERT INTO artikel VALUES (1, "kruh", 0.95, "ne");
 INSERT INTO artikel VALUES (2, "voda", 0.33, "ne");
 INSERT INTO artikel VALUES (3, "burek", 2.40, "ne");
@@ -48,3 +68,12 @@ INSERT INTO artikel VALUES (3, "burek", 2.40, "ne");
 INSERT INTO prodajalec VALUES (1, "Janez", "Novak", "janez.novak@gmail.com", "geslo1", "ne");
 
 INSERT INTO stranka VALUES (1, "Bojan", "Breg", "dol", 11, 1000, "Ljubljana", "BB@gmail.com", "geslo321", "ne");
+
+INSERT INTO narocilo VALUES (1, 15.32, "potrjeno");
+INSERT INTO narocilo VALUES (2, 9.78, "oddano");
+
+INSERT INTO vozicek VALUES (1, 1, 2);
+INSERT INTO vozicek VALUES (1, 2, 1);
+INSERT INTO vozicek VALUES (1, 3, 3);
+INSERT INTO vozicek VALUES (2, 2, 1);
+INSERT INTO vozicek VALUES (2, 3, 2);

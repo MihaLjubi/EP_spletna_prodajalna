@@ -38,7 +38,7 @@ $cena = 0;
         echo "notlogged";
     } ?>" />
 
-    <h1 style="margin-left: 10px">Pregled narocila</h1>
+    <h1 style="margin-left: 10px">Pregled naročila</h1>
     
     <div class="main">
         <?php foreach ($artikli as $artikel):
@@ -47,12 +47,16 @@ $cena = 0;
         <?php 
                 $cena = $cena + $artikel["cena"] * $_SESSION["cart"][$artikel["id_artikel"]];
             } endforeach; ?>
-
+                            
         <p>CENA:  <?= $cena ?> €</p>
         
         <div style="display: flex;">
             <a href="<?= BASE_URL . "artikli" ?>"><input type="button" value="Nazaj"/></a>
-            <a href="<?= BASE_URL . "narocilo/potrdi" ?>"><input type="button" value="Potrdi narocilo"/></a>
+            <form action="<?= BASE_URL . "narocilo/add" ?>" method="post">
+                <input type="hidden" name="cena" value="<?= $cena ?>"  />
+                <input type="hidden" name="status" value="neobdelano" />
+                <p><button>Zaključi nakup</button></p>
+            </form>   
         </div>
     </div>
 

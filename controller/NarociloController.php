@@ -1,15 +1,33 @@
 <?php
 
+require_once("model/NarociloDB.php");
 require_once("model/ArtikelDB.php");
 require_once("ViewHelper.php");
 
 class NarociloController { 
-    public static function pregled() {
-        
+    public static function index() {
+        echo ViewHelper::render("view/narocilo-list.php", [
+            "narocila" => NarociloDB::getAll()
+        ]);      
+    }
+    
+    public static function pregled() {     
         echo ViewHelper::render("view/narocilo-pregled.php", [
             "artikli" => ArtikelDB::getAll()
-        ]);
-        
+        ]);       
+    }
+    
+    public static function add() {
+        $data = filter_input_array(INPUT_POST, self::getRules());
+        if (self::checkValues($data)) {
+            $id = NarociloDB::insert($data);
+            unset($_SESSION["cart"]);
+            echo ViewHelper::render("view/artikel-list.php", [
+            "artikli" => ArtikelDB::getAll()
+            ]);
+        } else {
+            self::addForm($data);
+        }
     }
     
     /**
@@ -36,9 +54,8 @@ class NarociloController {
      */
     private static function getRules() {
         return [
-            'ime' => FILTER_SANITIZE_SPECIAL_CHARS,
             'cena' => FILTER_VALIDATE_FLOAT,
-            'izbrisan' => FILTER_SANITIZE_SPECIAL_CHARS,
+            'status' => FILTER_SANITIZE_SPECIAL_CHARS,
         ];
     }
 }

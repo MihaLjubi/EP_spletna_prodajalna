@@ -90,8 +90,14 @@ $urls = [
     "stranke/delete" => function () {
         StrankaController::delete();
     },
+    "narocila" => function () {
+        NarociloController::index();
+    },
     "narocilo/pregled" => function () {
         NarociloController::pregled();
+    },
+    "narocilo/add" => function () {
+        NarociloController::add();
     },
 ];
 
