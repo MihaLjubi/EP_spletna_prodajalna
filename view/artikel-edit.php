@@ -11,6 +11,7 @@
     <li id="prodajalciAdd"><a href="<?= BASE_URL . "prodajalci/add" ?>">Dodaj prodajalca</a></li>
     <li id="stranke"><a href="<?= BASE_URL . "stranke" ?>">Stranke</a></li>
     <li id="strankeAdd"><a href="<?= BASE_URL . "stranke/add" ?>">Dodaj stranko</a></li>
+    <li id="narocila"><a href="<?= BASE_URL . "narocila" ?>">Narocila</a></li>
     <li id="dropdown" class="dropdown">
       <a href="javascript:void(0)" class="dropbtn"><?= $_SESSION["ime"] ?> <?= $_SESSION["priimek"] ?></a>
       <div class="dropdown-content">

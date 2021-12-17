@@ -12,8 +12,8 @@ window.onload = function() {
     }
 };
 
-var notlogged = [artikli, artikliAdd, prodajalci, prodajalciAdd, stranke, strankeAdd, dropdown];
-var stranka = [artikliAdd, prodajalci, prodajalciAdd, stranke, strankeAdd, register, login];
+var notlogged = [artikli, artikliAdd, prodajalci, prodajalciAdd, stranke, strankeAdd, dropdown, narocila];
+var stranka = [artikliAdd, prodajalci, prodajalciAdd, stranke, strankeAdd, register, login, narocila];
 var prodajalec = [prodajalci, prodajalciAdd, register, login];
 var admin = [register, login];
 
