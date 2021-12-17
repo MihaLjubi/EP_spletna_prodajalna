@@ -24,7 +24,7 @@ class LoginController {
                     $found = false;
                     $prodajalci = ProdajalecDB::getAll();
                     foreach ($prodajalci as $prodajalec) {
-                        if($prodajalec["email"] === $email && $prodajalec["geslo"] === $geslo) {
+                        if($prodajalec["email"] === $email && password_verify($geslo, $prodajalec["geslo"])) {
                             $found = true;
                             $_SESSION['id'] = $prodajalec["id_prodajalec"];
                             $_SESSION['ime'] = $prodajalec["ime"];
@@ -35,7 +35,7 @@ class LoginController {
                     }
                     $stranke = StrankaDB::getAll();
                     foreach ($stranke as $stranka) {                     
-                        if($stranka["email"] === $email && $stranka["geslo"] === $geslo) {
+                        if($stranka["email"] === $email && password_verify($geslo, $stranka["geslo"])) {
                             $found = true;
                             $_SESSION['id'] = $stranka["id_stranka"];
                             $_SESSION['ime'] = $stranka["ime"];
@@ -77,8 +77,9 @@ class LoginController {
 
     public static function register() {
         $data = filter_input_array(INPUT_POST, self::getRules());
-
         if (self::checkValues($data)) {
+            $hash = password_hash($data["geslo"], PASSWORD_DEFAULT);
+            $data["geslo"] = $hash;
             $id = StrankaDB::insert($data);
             header("Location: login");
         } else {
