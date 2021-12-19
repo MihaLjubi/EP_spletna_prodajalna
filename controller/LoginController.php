@@ -19,19 +19,28 @@ class LoginController {
                     header("Location: login?error=Vnesite geslo");
                     exit();
                 }else{
+                    $authorized_users = ["Admin", "Janez"];
+                    $client_cert = filter_input(INPUT_SERVER, "SSL_CLIENT_CERT");
+                    $cert_data = openssl_x509_parse($client_cert);
+                    $commonname = $cert_data['subject']['CN'];
+                    
                     $found = false;
                     $prodajalci = ProdajalecDB::getAll();
                     foreach ($prodajalci as $prodajalec) {
                         if($prodajalec["email"] === $email && password_verify($geslo, $prodajalec["geslo"])) {
                             $found = true;
-                            $_SESSION['id'] = $prodajalec["id_prodajalec"];
-                            $_SESSION['ime'] = $prodajalec["ime"];
-                            $_SESSION['priimek'] = $prodajalec["priimek"];
-                            if($prodajalec["email"] == 'admin@admin')
-                                $_SESSION['role'] = "admin";
-                            else
-                                $_SESSION['role'] = "prodajalec";
-                            header("Location: artikli");
+                            if (in_array($commonname, $authorized_users)) {
+                                $_SESSION['id'] = $prodajalec["id_prodajalec"];
+                                $_SESSION['ime'] = $prodajalec["ime"];
+                                $_SESSION['priimek'] = $prodajalec["priimek"];
+                                if($prodajalec["email"] == 'admin@admin')
+                                    $_SESSION['role'] = "admin";
+                                else
+                                    $_SESSION['role'] = "prodajalec";
+                                header("Location: artikli");
+                            } else {
+                                header("Location: login?error=Uporabnik ni avtoriziran");
+                            }
                         }
                     }
                     $stranke = StrankaDB::getAll();
