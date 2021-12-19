@@ -1,5 +1,12 @@
 <!DOCTYPE html>
 
+<?php
+    if (!isset($_SERVER["HTTPS"])) {
+        $url = "https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
+        header("Location: " . $url);
+    }
+?>
+
 <link rel="stylesheet" type="text/css" href="<?= CSS_URL . "style.css" ?>">
 <meta charset="UTF-8" />
 <title>Registracija</title>

@@ -2,6 +2,11 @@
 
 $cena = 0;
 
+if (!isset($_SERVER["HTTPS"]) && $_SESSION["role"] == "stranka") {
+    $url = "https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
+    header("Location: " . $url);
+}
+
 ?>
 
 <link rel="stylesheet" type="text/css" href="<?= CSS_URL . "style.css" ?>">

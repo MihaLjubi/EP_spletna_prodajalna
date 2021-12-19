@@ -1,0 +1,3 @@
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule "(^register/.*)" "https://%{HTTP_HOST}%{REQUEST_URI}"

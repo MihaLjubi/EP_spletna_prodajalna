@@ -1,5 +1,12 @@
 <!DOCTYPE html>
 
+<?php 
+    if (!isset($_SERVER["HTTPS"]) && $_SESSION["role"] == "stranka") {
+        $url = "https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
+        header("Location: " . $url);
+    }
+?>
+
 <link rel="stylesheet" type="text/css" href="<?= CSS_URL . "style.css" ?>">
 <meta charset="UTF-8" />
 <title>Uredi stranko</title>
@@ -53,7 +60,7 @@
 
 <form action="<?= BASE_URL . "stranke/delete" ?>" method="post">
     <input type="hidden" name="id_stranka" value="<?= $stranka["id_stranka"] ?>"  />
-    <button type="submit" class="important">Odstrani</button>
+    <button <?php if($_SESSION["role"] == "stranka") echo "hidden" ?> type="submit" class="important">Odstrani</button>
 </form>
 
 <form action="<?= BASE_URL . "stranke/edit" ?>" method="post">
@@ -67,7 +74,7 @@
     <input type="hidden" name="email" value="<?= $stranka["email"] ?>" />
     <input type="hidden" name="geslo" value="<?= $stranka["geslo"] ?>" />
     <input type="hidden" name="izbrisan" value="da" />
-    <button type="submit" class="important">Deaktiviraj</button>
+    <button <?php if($_SESSION["role"] == "stranka") echo "hidden" ?> type="submit" class="important">Deaktiviraj</button>
 </form>
 
 <script>

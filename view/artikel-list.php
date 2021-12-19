@@ -3,6 +3,11 @@
 $url = filter_input(INPUT_SERVER, "PHP_SELF", FILTER_SANITIZE_SPECIAL_CHARS);
 $method = filter_input(INPUT_SERVER, "REQUEST_METHOD", FILTER_SANITIZE_SPECIAL_CHARS);
 
+if (!isset($_SERVER["HTTPS"]) && $_SESSION["role"] == "stranka") {
+    $url = "https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
+    header("Location: " . $url);
+}
+
 function role_display() {
     if(isset($_SESSION["role"])) {
         if($_SESSION["role"] == "stranka") 
