@@ -93,13 +93,13 @@ $urls = [
     "narocila" => function () {
         NarociloController::index();
     },
-    "narocilo/pregled" => function () {
+    "narocila/pregled" => function () {
         NarociloController::pregled();
     },
-    "narocilo/add" => function () {
+    "narocila/add" => function () {
         NarociloController::add();
     },
-    "narocilo/edit" => function () {
+    "narocila/edit" => function () {
         NarociloController::edit();
     },            
 ];

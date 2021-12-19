@@ -11,7 +11,7 @@
     <li id="prodajalciAdd"><a href="<?= BASE_URL . "prodajalci/add" ?>">Dodaj prodajalca</a></li>
     <li id="stranke"><a href="<?= BASE_URL . "stranke" ?>">Stranke</a></li>
     <li id="strankeAdd"><a href="<?= BASE_URL . "stranke/add" ?>">Dodaj stranko</a></li>
-    <li id="narocila"><a href="<?= BASE_URL . "narocila" ?>">Narocila</a></li>
+    <li id="narocila"><a href="<?= BASE_URL . "narocila?status=all" ?>">Narocila</a></li>
     <li id="dropdown" class="dropdown">
       <a href="javascript:void(0)" class="dropbtn"><?= $_SESSION["ime"] ?> <?= $_SESSION["priimek"] ?></a>
       <div class="dropdown-content">
@@ -38,7 +38,15 @@
 <h1>Narocila</h1>
 
 <div class="main">
-    <?php foreach ($narocila as $narocilo): ?>
+    <p>[
+        <a href="<?= BASE_URL . "narocila?status=all" ?>">Vsa</a> |
+        <a href="<?= BASE_URL . "narocila?status=neobdelano" ?>">Neobdelana</a> |
+        <a href="<?= BASE_URL . "narocila?status=potrjeno" ?>">Potrjena</a> |
+        <a href="<?= BASE_URL . "narocila?status=preklicano" ?>">Preklicana</a>
+    ]</p>
+    <?php     
+    foreach ($narocila as $narocilo): 
+        if($narocilo["status"] == $_GET["status"] || $_GET["status"] == "all" || ($narocilo["status"] == "stornirano" && $_GET["status"] == "preklicano")) {?>
         <div style="
             display: flex;
             justify-content: space-between;
@@ -53,19 +61,22 @@
                 </div>
                 
                 <div style="margin-right: 20px">
-                    <form <?php if($narocilo["status"] != "neobdelano") echo "hidden" ?> action="<?= BASE_URL . "narocilo/edit" ?>" method="post">
+                    <form <?php if($narocilo["status"] != "neobdelano") echo "hidden" ?> action="<?= BASE_URL . "narocila/edit" ?>" method="post">
+                        <input type="hidden" name="list" value="<?= $_GET["status"] ?>" />
                         <input type="hidden" name="id_narocilo" value="<?= $narocilo["id_narocilo"] ?>" />
                         <input type="hidden" name="cena" value="<?= $narocilo["cena"] ?>" />
                         <input type="hidden" name="status" value="potrjeno" />
                         <p><button>Potrdi</button></p>
                     </form>
-                    <form  <?php if($narocilo["status"] != "neobdelano") echo "hidden" ?> action="<?= BASE_URL . "narocilo/edit" ?>" method="post">
+                    <form  <?php if($narocilo["status"] != "neobdelano") echo "hidden" ?> action="<?= BASE_URL . "narocila/edit" ?>" method="post">
+                        <input type="hidden" name="list" value="<?= $_GET["status"] ?>" />
                         <input type="hidden" name="id_narocilo" value="<?= $narocilo["id_narocilo"] ?>" />
                         <input type="hidden" name="cena" value="<?= $narocilo["cena"] ?>" />
                         <input type="hidden" name="status" value="preklicano" />
                         <p><button>Prekliči</button></p>
                     </form>
-                    <form <?php if($narocilo["status"] != "potrjeno") echo "hidden" ?> action="<?= BASE_URL . "narocilo/edit" ?>" method="post">
+                    <form <?php if($narocilo["status"] != "potrjeno") echo "hidden" ?> action="<?= BASE_URL . "narocila/edit" ?>" method="post">
+                        <input type="hidden" name="list" value="<?= $_GET["status"] ?>" />
                         <input type="hidden" name="id_narocilo" value="<?= $narocilo["id_narocilo"] ?>" />
                         <input type="hidden" name="cena" value="<?= $narocilo["cena"] ?>" />
                         <input type="hidden" name="status" value="stornirano" />
@@ -73,7 +84,7 @@
                     </form>
                 </div>             
         </div>
-        <?php  endforeach; ?>
+        <?php } endforeach; ?>
 </div>
 <script>
     <?php require_once("static/javaScript/code.js");?>

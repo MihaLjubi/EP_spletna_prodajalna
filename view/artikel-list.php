@@ -68,7 +68,7 @@ if ($method == "POST") {
       <li id="prodajalciAdd"><a href="<?= BASE_URL . "prodajalci/add" ?>">Dodaj prodajalca</a></li>
       <li id="stranke"><a href="<?= BASE_URL . "stranke" ?>">Stranke</a></li>
       <li id="strankeAdd"><a href="<?= BASE_URL . "stranke/add" ?>">Dodaj stranko</a></li>
-      <li id="narocila"><a href="<?= BASE_URL . "narocila" ?>">Narocila</a></li>
+      <li id="narocila"><a href="<?= BASE_URL . "narocila?status=all" ?>">Narocila</a></li>
       <li id="dropdown" class="dropdown">
         <a href="javascript:void(0)" class="dropbtn"><?= $_SESSION["ime"] ?> <?= $_SESSION["priimek"] ?></a>
         <div class="dropdown-content">
@@ -103,14 +103,14 @@ if ($method == "POST") {
                         <input type="hidden" name="id_artikel" value="<?= $artikel["id_artikel"] ?>" />
                         <p><?= $artikel["ime"] ?></p>
                         <p><?= $artikel["cena"] ?>€<br/>
-                        <button <?php if(!isset($_SESSION["role"])) echo "hidden" ?> type="submit">V košarico</button><br>
+                        <button <?php if(!isset($_SESSION["role"]) || $_SESSION["role"] == "prodajalec" || $_SESSION["role"] == "admin") echo "hidden" ?> type="submit">V košarico</button><br>
                         <a <?php role_display() ?> href="<?= BASE_URL . "artikli/edit?id_artikel=" . $artikel["id_artikel"] ?>">Uredi</a>
                     </form>
                 </div>
                 <?php } endforeach; ?>
         </div>
 
-        <div <?php if(!isset($_SESSION["role"])) echo "hidden" ?> class="cart">
+        <div <?php if(!isset($_SESSION["role"]) || $_SESSION["role"] == "prodajalec" || $_SESSION["role"] == "admin") echo "hidden" ?> class="cart">
             <h3>Košarica</h3>
             <p><?php
             $cena = 0;
@@ -148,7 +148,7 @@ if ($method == "POST") {
                     <input type="hidden" name="do" value="purge_cart"/>
                     <button>Izprazni</button>
                 </form>
-                <a href="<?= BASE_URL . "narocilo/pregled" ?>"><input type="button" value="Zakljuci nakup"/></a>
+                <a href="<?= BASE_URL . "narocila/pregled" ?>"><input type="button" value="Zakljuci nakup"/></a>
             </div>      
         </div>
 

@@ -38,6 +38,8 @@ class ProdajalecController {
     public static function add() {
         $data = filter_input_array(INPUT_POST, self::getRules());;
         if (self::checkValues($data)) {
+            $hash = password_hash($data["geslo"], PASSWORD_DEFAULT);
+            $data["geslo"] = $hash;
             $id = ProdajalecDB::insert($data);
             echo ViewHelper::render("view/prodajalec-list.php", [
             "prodajalci" => ProdajalecDB::getAll()

@@ -70,7 +70,7 @@ INSERT INTO artikel VALUES (3, "burek", 2.40, "ne");
 INSERT INTO prodajalec VALUES (999, "Admin", "", "admin@admin", "$2y$10$j0/k1IJ.9rQkyPMiO///pOk1.ts7rXjhjgbAeXnoBANC/V60kszlG", "ne");
 INSERT INTO prodajalec VALUES (1, "Janez", "Novak", "janez.novak@gmail.com", "$2y$10$co3uQbO4Fy2By9kXJ58HguDQI9ZPuN2qaj7V5M2Bi0ZQlx6fZrqnK", "ne");
 
-INSERT INTO stranka VALUES (1, "Bojan", "Breg", "dol", 11, 1000, "Ljubljana", "BB@gmail.com", "geslo321", "ne");
+INSERT INTO stranka VALUES (1, "Bojan", "Breg", "dol", 11, 1000, "Ljubljana", "BB@gmail.com", "$2y$10$wZPtsVvUoWHRPsS35jOw5.riBZqXgzReKlP07w57OW6jqZNHWGOvm", "ne");
 
 INSERT INTO narocilo VALUES (1, 15.32, "potrjeno");
 INSERT INTO narocilo VALUES (2, 9.78, "neobdelano");

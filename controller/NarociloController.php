@@ -36,12 +36,12 @@ class NarociloController {
             'filter' => FILTER_VALIDATE_INT,
             'options' => ['min_range' => 1]
         ];
-        $data = filter_input_array(INPUT_POST, $rules);       
+        $rules["list"] = 123;
+        $data = filter_input_array(INPUT_POST, $rules);  
         if (self::checkValues($data)) {
             NarociloDB::update($data);
-            echo ViewHelper::render("view/narocilo-list.php", [
-            "narocila" => NarociloDB::getAll()
-            ]);   
+            $list = $data["list"];
+            header("Location: https://localhost/netbeans/spletnaProdajalna/index.php/narocila?status=$list");
         } else {
             self::editForm($data);
         }
