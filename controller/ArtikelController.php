@@ -6,24 +6,9 @@ require_once("ViewHelper.php");
 class ArtikelController {
     
     public static function index() {
-        $rules = [
-            "id" => [
-                'filter' => FILTER_VALIDATE_INT,
-                'options' => ['min_range' => 1]
-            ]
-        ];
-
-        $data = filter_input_array(INPUT_GET, $rules);
-
-        if (self::checkValues($data)) {
-            echo ViewHelper::render("view/artikel-detail.php", [
-                "artikel" => ArtikelDB::get($data)
-            ]);
-        } else {
-            echo ViewHelper::render("view/artikel-list.php", [
-                "artikli" => ArtikelDB::getAll()
-            ]);
-        }
+        echo ViewHelper::render("view/artikel-list.php", [
+            "artikli" => ArtikelDB::getAll()
+        ]);       
     }
     
     public static function addForm($values = [
