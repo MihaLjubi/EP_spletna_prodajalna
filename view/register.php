@@ -89,15 +89,17 @@
       <li id="strankeAdd"><a href="<?= BASE_URL . "stranke/add" ?>">Dodaj stranko</a></li>
       <li id="narocila"><a href="<?= BASE_URL . "narocila" ?>">Narocila</a></li>
       <li id="dropdown" class="dropdown">
-        <a href="javascript:void(0)" class="dropbtn"><?= $_SESSION["ime"] ?> <?= $_SESSION["priimek"] ?></a>
+        <a href="javascript:void(0)" class="dropbtn"><?php if(isset($_SESSION["ime"])) echo $_SESSION["ime"] ?> <?php if(isset($_SESSION["priimek"])) echo $_SESSION["priimek"] ?></a>
         <div class="dropdown-content">
             <a href="
                     <?php 
-                        if($_SESSION["role"] == "prodajalec" || $_SESSION["role"] == "admin") {
-                            echo BASE_URL . "prodajalci/edit?id_prodajalec=" . $_SESSION["id"];
-                        } else {
-                            echo BASE_URL . "stranke/edit?id_stranka=" . $_SESSION["id"];
-                        } 
+                        if(isset($_SESSION["role"])) {
+                            if($_SESSION["role"] == "prodajalec" || $_SESSION["role"] == "admin") {
+                                echo BASE_URL . "prodajalci/edit?id_prodajalec=" . $_SESSION["id"];
+                            } else {
+                                echo BASE_URL . "stranke/edit?id_stranka=" . $_SESSION["id"];
+                            } 
+                        }
                     ?>">Uredi podatke</a>
             <a href="<?= BASE_URL . "logout" ?>">Odjava</a>
         </div>

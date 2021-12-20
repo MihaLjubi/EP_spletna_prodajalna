@@ -6,8 +6,9 @@ require_once("controller/ArtikelController.php");
 require_once("controller/ProdajalecController.php");
 require_once("controller/StrankaController.php");
 require_once("controller/NarociloController.php");
+require_once("controller/ArtikelRESTController.php");
 
-define("BASE_URL", $_SERVER["SCRIPT_NAME"] . "/");
+define("BASE_URL", rtrim($_SERVER["SCRIPT_NAME"], "index.php"));
 define("IMAGES_URL", rtrim($_SERVER["SCRIPT_NAME"], "index.php") . "static/images/");
 define("CSS_URL", rtrim($_SERVER["SCRIPT_NAME"], "index.php") . "static/css/");
 
@@ -106,15 +107,59 @@ $urls = [
         NarociloController::edit();
     },           
 ];
+    
+$urls_rest = [
+    "/^api\/artikli\/(\d+)$/" => function ($method, $id) {
+        switch ($method) {
+            case "PUT":
+                ArtikelRESTController::edit($id);
+                break;
+            case "DELETE":
+                ArtikelRESTController::delete($id);
+            default: # GET
+                ArtikelRESTController::get($id);
+                break;
+        }
+    },
+    "/^api\/artikli$/" => function ($method) {
+        switch ($method) {
+            case "POST":
+                ArtikelRESTController::add();
+                break;
+            default: # GET
+                ArtikelRESTController::index();
+                break;
+        }
+    },
+];   
 
-try {
-    if (isset($urls[$path])) {
-        $urls[$path]();
-    } else {
-        echo "No controller for '$path'";
+if(explode('/', $_SERVER['REQUEST_URI'])[3] == "api") {
+    foreach ($urls_rest as $pattern => $controller) {
+        if (preg_match($pattern, $path, $params)) {
+            try {
+                $params[0] = $_SERVER["REQUEST_METHOD"];
+                $controller(...$params);
+            } catch (InvalidArgumentException $e) {
+                ViewHelper::error404();
+            } catch (Exception $e) {
+                ViewHelper::displayError($e, true);
+            }
+
+            exit();
+        }
     }
-} catch (InvalidArgumentException $e) {
-    ViewHelper::error404();
-} catch (Exception $e) {
-    echo "An error occurred: <pre>$e</pre>";
-} 
+
+    ViewHelper::displayError(new InvalidArgumentException("No controller matched."), true);
+} else {
+    try {
+        if (isset($urls[$path])) {
+            $urls[$path]();
+        } else {
+            echo "No controller for '$path'";
+        }
+    } catch (InvalidArgumentException $e) {
+        ViewHelper::error404();
+    } catch (Exception $e) {
+        echo "An error occurred: <pre>$e</pre>";
+    }
+}
