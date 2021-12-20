@@ -7,7 +7,76 @@
     }
 ?>
 
+<?php           
+    $permitted_chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+
+    function secure_generate_string($input, $strength = 5, $secure = true) {
+        $input_length = strlen($input);
+        $random_string = '';
+        for($i = 0; $i < $strength; $i++) {
+            if($secure) {
+                $random_character = $input[random_int(0, $input_length - 1)];
+            } else {
+                $random_character = $input[mt_rand(0, $input_length - 1)];
+            }
+            $random_string .= $random_character;
+        }
+
+        return $random_string;
+    }
+    
+    function generate_capatcha($permitted_chars) {
+        $im = imagecreatetruecolor(200, 50);
+        imageantialias($im, true);
+
+        $colors = [];
+
+        $red = rand(125, 175);
+        $green = rand(125, 175);
+        $blue = rand(125, 175);
+
+        for($i = 0; $i < 5; $i++) {
+            $colors[] = imagecolorallocate($im, $red - 20*$i, $green - 20*$i, $blue - 20*$i);
+        }
+        imagefill($im, 0, 0, $colors[0]);
+
+        for($i = 0; $i < 10; $i++) {
+            imagesetthickness($im, rand(2, 10));
+            $rect_color = $colors[rand(1, 4)];
+            imagerectangle($im, rand(-10, 190), rand(-10, 10), rand(-10, 190), rand(40, 60), $rect_color);
+        }
+
+        $black = imagecolorallocate($im, 0, 0, 0);
+        $white = imagecolorallocate($im, 255, 255, 255);
+        $textcolors = [$black, $white];
+
+        $fonts = [dirname(__FILE__, 2).'/static/fonts/Comic.ttf', dirname(__FILE__, 2).'/static/fonts/Ubuntu.ttf', dirname(__FILE__, 2).'/static/fonts/Bodo.ttf', dirname(__FILE__, 2).'/static/fonts/KOMIKAX.ttf'];
+
+        $string_length = 6;
+        $captcha_string = secure_generate_string($permitted_chars, $string_length);
+
+        for($i = 0; $i < $string_length; $i++) {
+            $letter_space = 170/$string_length;
+            $initial = 15;
+
+            imagettftext($im, 20, rand(-15, 15), $initial + $i*$letter_space, rand(20, 40), $textcolors[rand(0, 1)], $fonts[array_rand($fonts)], $captcha_string[$i]);
+        }
+
+        ob_start ();
+
+        imagejpeg($im);
+        imagedestroy($im);
+
+        $data = ob_get_contents ();
+        ob_end_clean ();
+
+        return "<img class='captcha-image' src='data:image/jpeg;base64,".base64_encode ($data)."'>";
+    }
+?>
+
 <link rel="stylesheet" type="text/css" href="<?= CSS_URL . "style.css" ?>">
+<link rel="stylesheet" type="text/css" href="<?= CSS_URL . "all.css" ?>">
+<link rel="stylesheet" type="text/css" href="<?= CSS_URL . "fontawesome.min.css" ?>">
 <meta charset="UTF-8" />
 <title>Registracija</title>
 
@@ -54,10 +123,19 @@
     <p><label>Email: <input type="text" name="email" value="<?= $email ?>" /></label></p>
     <p><label>Geslo: <input type="text" name="geslo" value="<?= $geslo ?>" /></label></p>
     <input type="hidden" name="izbrisan" value="ne"/>
+    <div id="captcha-div">
+        <?php echo generate_capatcha($permitted_chars); ?> <i class="fas fa-redo refresh-captcha"></i> <br>
+    </div>
+    <input style="margin-top: 5px" type="text" id="captcha" name="captcha" pattern="[A-Z]{6}">
     <p><button>Registriraj se</button></p>
 </form>
 
 <script>
     <?php require_once("static/javaScript/code.js");?>
+        
+    var refreshButton = document.querySelector(".refresh-captcha");
+    refreshButton.onclick = function() {
+      document.querySelector(".captcha-image").src = 'captcha.php?' + Date.now();
+    }
 </script>
 
