@@ -5,6 +5,14 @@ require_once("model/StrankaDB.php");
 require_once("model/ArtikelDB.php");
 require_once("ViewHelper.php");
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+require 'vendor/phpmailer/phpmailer/src/PHPMailer.php';
+require 'vendor/phpmailer/phpmailer/src/Exception.php';
+require 'vendor/phpmailer/phpmailer/src/SMTP.php';
+
 class LoginController {
     public static function index() {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -88,12 +96,45 @@ class LoginController {
     public static function register() {
         $data = filter_input_array(INPUT_POST, self::getRules());
         if (self::checkValues($data)) {
+                /*
+                $token = md5($data['email']).rand(10,9999);
+                $link = "<a href='localhost/netbeans/spletnaProdajalna/index.php/verify-email.php?key=".$data['email']."&token=".$token."'>Click and Verify Email</a>";
+                try {
+                $mail = new PHPMailer(true);
+                $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+
+                $mail->CharSet =  "utf-8";
+                $mail->IsSMTP();
+                $mail->Host = "smtp.gmail.com";
+                $mail->SMTPAuth = true;
+                $mail->Username = "user@example.com";
+                $mail->Password = "secret";
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;  
+                $mail->Port = "465";
+
+                $mail->setFrom('from@example.com', 'Mailer');
+                $mail->AddAddress('matic46@gmail.com');
+
+                $mail->IsHTML(true);
+                $mail->Subject  =  'Reset Password';
+                $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
+
+                $mail->send();
+                echo 'Message has been sent';
+            } catch (Exception $e) {
+                echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+            }
+
+            var_dump($link);
+            var_dump($token);
+            exit();
+            */
             $hash = password_hash($data["geslo"], PASSWORD_DEFAULT);
             $data["geslo"] = $hash;
             $id = StrankaDB::insert($data);
             header("Location: login");
         } else {
-            self::addForm($data);
+            self::registerForm($data);
         }
     }
     

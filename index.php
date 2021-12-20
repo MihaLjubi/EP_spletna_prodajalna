@@ -21,6 +21,9 @@ $urls = [
             LoginController::registerForm();
         }
     },
+    "verify-email" => function () {
+        LoginController::verify_email();
+    },   
     "login" => function () {
         LoginController::index();
     },
@@ -101,7 +104,7 @@ $urls = [
     },
     "narocila/edit" => function () {
         NarociloController::edit();
-    },            
+    },           
 ];
 
 try {
