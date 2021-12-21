@@ -53,8 +53,8 @@ class ArtikelRESTController {
             $artikel = ArtikelDB::get(["id_artikel" => $id]);
             ArtikelDB::delete(["id_artikel" => $id]);
             echo ViewHelper::renderJSON("", 204);
+            exit();
         } catch (Exception $exc) {
-            var_dump($exc);
             echo ViewHelper::renderJSON("No such artikel", 404);
         }
         // https://www.restapitutorial.com/httpstatuscodes.html
