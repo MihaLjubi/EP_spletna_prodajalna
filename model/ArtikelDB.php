@@ -21,11 +21,10 @@ class ArtikelDB extends AbstractDB{
         $artikli = parent::query("SELECT id_artikel, ime, cena, izbrisan"
                         . " FROM artikel"
                         . " WHERE id_artikel = :id_artikel", $id);
-        
         if (count($artikli) == 1) {
             return $artikli[0];
         } else {
-            throw new InvalidArgumentException("No such book");
+            throw new InvalidArgumentException("Artikel ne obstaja");
         }
     }
 
