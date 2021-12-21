@@ -6,9 +6,24 @@ require_once("ViewHelper.php");
 class ArtikelController {
     
     public static function index() {
-        echo ViewHelper::render("view/artikel-list.php", [
-            "artikli" => ArtikelDB::getAll()
-        ]);      
+        $rules = [
+            "id_artikel" => [
+                'filter' => FILTER_VALIDATE_INT,
+                'options' => ['min_range' => 1]
+            ]
+        ];
+
+        $data = filter_input_array(INPUT_GET, $rules);
+
+        if (self::checkValues($data)) {
+            echo ViewHelper::render("view/artikel-detail.php", [
+                "artikel" => ArtikelDB::get($data)
+            ]);
+        } else {
+            echo ViewHelper::render("view/artikel-list.php", [
+                "artikli" => ArtikelDB::getAll()
+            ]);
+        }      
     }
     
     /*
@@ -20,6 +35,7 @@ class ArtikelController {
     public static function addForm($values = [
         "ime" => "",
         "cena" => "",
+        "opis" => ""
     ]) {
         echo ViewHelper::render("view/artikel-add.php", $values);
     }
@@ -75,9 +91,14 @@ class ArtikelController {
     }
 
     public static function delete() {
-        $data = filter_input_array(INPUT_POST, []);
-        var_dump($data);
-        exit();
+        $rules = [
+            'id_artikel' => [
+                'filter' => FILTER_VALIDATE_INT,
+                'options' => ['min_range' => 1]
+            ]
+        ];
+        $data = filter_input_array(INPUT_POST, $rules);
+
         if (self::checkValues($data)) {
             ArtikelDB::delete($data);
             $url = BASE_URL . "artikli";
@@ -118,6 +139,7 @@ class ArtikelController {
         return [
             'ime' => FILTER_SANITIZE_SPECIAL_CHARS,
             'cena' => FILTER_VALIDATE_FLOAT,
+            'opis' => FILTER_SANITIZE_SPECIAL_CHARS,
             'izbrisan' => FILTER_SANITIZE_SPECIAL_CHARS,
         ];
     }

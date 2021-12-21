@@ -2,7 +2,7 @@
 
 <link rel="stylesheet" type="text/css" href="<?= CSS_URL . "style.css" ?>">
 <meta charset="UTF-8" />
-<title>Dodaj artikel</title>
+<title>Podrobnosti</title>
 
 <ul class="nav">
     <li id="artikli"><a href="<?= BASE_URL . "artikli" ?>">Artikli</a></li>
@@ -37,15 +37,11 @@
       echo "notlogged";
   } ?>" />
 
-<h1>Dodaj artikel</h1>
+<h1>Podrobnosti</h1>
 
-<form action="<?= BASE_URL . "artikli/add" ?>" method="post">
-    <p><label>Ime: <input type="text" name="ime" value="<?= $ime ?>" autofocus /></label></p>
-    <p><label>Cena: <input type="text" name="cena" value="<?= $cena ?>" /></label></p>
-    <p><label>Opis: <br/><textarea name="opis" cols="70" rows="10"><?= $opis ?></textarea></label></p>
-    <input type="hidden" name="izbrisan" value="ne"/>
-    <p><button>Dodaj</button></p>
-</form>
+<p><b>Ime:</b> <?= $artikel["ime"] ?></p>
+<p><b>Cena:</b> <?= $artikel["cena"] ?>€</p>
+<p><b>Opis:</b> <?= $artikel["opis"] ?></p>
 
 <script>
     <?php require_once("static/javaScript/code.js");?>

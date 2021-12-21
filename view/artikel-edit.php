@@ -43,6 +43,7 @@
     <input type="hidden" name="id_artikel" value="<?= $artikel["id_artikel"] ?>"  />
     <p><label>Ime: <input type="text" name="ime" value="<?= $artikel["ime"] ?>" autofocus /></label></p>
     <p><label>Cena: <input type="text" name="cena" value="<?= $artikel["cena"] ?>" /></label></p>
+    <p><label>Opis: <br/><textarea name="opis" cols="70" rows="10"><?= $artikel["opis"] ?></textarea></label></p>
     <input type="hidden" name="izbrisan" value="<?= $artikel["izbrisan"] ?>" />
     <p><button>Posodobi</button></p>
 </form>
@@ -56,6 +57,7 @@
     <input type="hidden" name="id_artikel" value="<?= $artikel["id_artikel"] ?>"  />
     <input type="hidden" name="ime" value="<?= $artikel["ime"] ?>" autofocus />
     <input type="hidden" name="cena" value="<?= $artikel["cena"] ?>" />
+    <p><textarea hidden name="opis" cols="70" rows="10"><?= $artikel["opis"] ?></textarea></label></p>
     <input type="hidden" name="izbrisan" value="da" />
     <button type="submit" class="important">Deaktiviraj</button>
 </form>

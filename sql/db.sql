@@ -9,6 +9,7 @@ CREATE TABLE `artikel` (
   `id_artikel` int(11) NOT NULL AUTO_INCREMENT,
   `ime` text,
   `cena` double NOT NULL,
+  `opis` text,
   `izbrisan` text, 
   PRIMARY KEY (`id_artikel`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -63,9 +64,9 @@ CREATE TABLE `vozicek` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 */
 
-INSERT INTO artikel VALUES (1, "kruh", 0.95, "ne");
-INSERT INTO artikel VALUES (2, "voda", 0.33, "ne");
-INSERT INTO artikel VALUES (3, "burek", 2.40, "ne");
+INSERT INTO artikel VALUES (1, "Specialized Gorsko kolo", 1450, "Žensko gorsko kolo Specialized Rockhopper Expert 29 opišejo pridevniki vzdržljiv, lahek in izredno zmogljiv.  Z novim Rockhopperjem Expertom so pri Specializedu zopet premaknili meje. Resnična XC zverina za premagovanje trailov, katere nakup ne pomeni nujno konkretnega manjka na tvojem tekočem računu. RH Expert je rezultat 30 letnega razmerja med ceno in zmogljivostmi. Premium A1 aluminijastem okvirju z moderno geometrijo je bila posvečena izjemna pozornost in tako tvori trdo osnovo za najboljšega RH dosedaj. Če temu dodaš še seznam odličnih komponent, dobiš kolo, ki je pripravljeno poleteti!.", "ne");
+INSERT INTO artikel VALUES (2, "FISCHER F18 smuči", 414.5, "Smuči se ponašajo s sistemom Dual Radius System – prvi del smuči ima polmer kroga (manjši radij), slalomski lok, ki omogoča enostaven in hiter vstop v ovinek, medtem ko ima drugi del smuči polmer elipse ( večji radij), veleslalomski lok, ki zagotavlja odlično stabilnost pri velikih hitrostih in daljših zavojih.", "ne");
+INSERT INTO artikel VALUES (3, "Babolat Pure Aero", 174.95, "Opremljen je z Novim Cortex Pure Feel sistemom, ki odlično duši vibracije, obenem pa omogoča tudi neverjeten zvok in še izboljšan občutek pri udarcu. Rezultat nove generacije kvalitetnih karbonskih vlaken, vgrajenih v strukturo loparja (CARBON PLY STABILIZER), je izboljšana stabilnost in veliko večja kontrola kot pri prejšnjem modelu.", "ne");
 
 INSERT INTO prodajalec VALUES (999, "Admin", "", "admin@admin", "$2y$10$j0/k1IJ.9rQkyPMiO///pOk1.ts7rXjhjgbAeXnoBANC/V60kszlG", "ne");
 INSERT INTO prodajalec VALUES (1, "Janez", "Novak", "janez.novak@gmail.com", "$2y$10$co3uQbO4Fy2By9kXJ58HguDQI9ZPuN2qaj7V5M2Bi0ZQlx6fZrqnK", "ne");

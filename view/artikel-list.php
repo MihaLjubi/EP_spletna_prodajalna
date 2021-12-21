@@ -113,6 +113,7 @@ if ($method == "POST") {
                         <p><?= $artikel["ime"] ?></p>
                         <p><?= $artikel["cena"] ?>€<br/>
                         <button <?php if(!isset($_SESSION["role"]) || $_SESSION["role"] == "prodajalec" || $_SESSION["role"] == "admin") echo "hidden" ?> type="submit">V košarico</button><br>
+                        <a href="<?= BASE_URL . "artikli?id_artikel=" . $artikel["id_artikel"] ?>">Podrobnosti</a><br>
                         <a <?php role_display() ?> href="<?= BASE_URL . "artikli/edit?id_artikel=" . $artikel["id_artikel"] ?>">Uredi</a>
                     </form>
                 </div>
