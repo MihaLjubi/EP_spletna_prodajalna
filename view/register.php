@@ -54,6 +54,8 @@
 
         $string_length = 6;
         $captcha_string = secure_generate_string($permitted_chars, $string_length);
+        
+        echo "<input type='hidden' id='captcha-string' value='$captcha_string' /> ";
 
         for($i = 0; $i < $string_length; $i++) {
             $letter_space = 170/$string_length;
@@ -115,6 +117,10 @@
 
 <h1>Registracija</h1>
 
+<?php if (isset($error)) { ?>
+    <p class="error"><?php echo $error; ?></p>
+<?php } ?>
+
 <form action="<?= BASE_URL . "register" ?>" method="post">
     <p><label>Ime: <input type="text" name="ime" value="<?= $ime ?>" autofocus /></label></p>
     <p><label>Priimek: <input type="text" name="priimek" value="<?= $priimek ?>" /></label></p>
@@ -123,12 +129,13 @@
     <p><label>Postna stevilka: <input type="text" name="postna_stevilka" value="<?= $postna_stevilka ?>" /></label></p>
     <p><label>Posta: <input type="text" name="posta" value="<?= $posta ?>" /></label></p>
     <p><label>Email: <input type="text" name="email" value="<?= $email ?>" /></label></p>
-    <p><label>Geslo: <input type="text" name="geslo" value="<?= $geslo ?>" /></label></p>
+    <p><label>Geslo: <input type="password" name="geslo" value="<?= $geslo ?>" /></label></p>
     <input type="hidden" name="izbrisan" value="ne"/>
     <div id="captcha-div">
         <?php echo generate_capatcha($permitted_chars); ?> <i class="fas fa-redo refresh-captcha"></i> <br>
     </div>
-    <input style="margin-top: 5px" type="text" id="captcha" name="captcha" pattern="[A-Z]{6}">
+    <input style="margin-top: 5px" type="text" id="captcha" name="captcha" pattern="[A-Z0-9]{6}">  
+    <input type='hidden' id='captcha-value' name='captcha-value'/>
     <p><button>Registriraj se</button></p>
 </form>
 
@@ -137,7 +144,11 @@
         
     var refreshButton = document.querySelector(".refresh-captcha");
     refreshButton.onclick = function() {
-      document.querySelector(".captcha-image").src = 'captcha.php?' + Date.now();
+      window.location.reload();
+    }
+    
+    window.onload = function() {
+        document.getElementById('captcha-value').value = document.getElementById('captcha-string').value;
     }
 </script>
 

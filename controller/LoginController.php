@@ -92,7 +92,7 @@ class LoginController {
     ]) {
         echo ViewHelper::render("view/register.php", $values);
     }
-
+    
     public static function register() {
         $data = filter_input_array(INPUT_POST, self::getRules());
         if (self::checkValues($data)) {
@@ -134,7 +134,7 @@ class LoginController {
             $id = StrankaDB::insert($data);
             header("Location: login");
         } else {
-            self::registerForm($data);
+            self::inputError("Mankajoči podatki", $data);
         }
     }
     
@@ -150,27 +150,75 @@ class LoginController {
         if (empty($input)) {
             return FALSE;
         }
-
+        
         $result = TRUE;
         foreach ($input as $value) {
+            if(empty($value))
+                return false;
             $result = $result && $value != false;
         }
-
+        
+        var_dump($input);
+        
+        if(!preg_match('/^[a-zA-ZščćžŠČĆŽ ]+$/', $input["ime"]))
+            self::inputError("Ime mora vsebovati samo črke", $input);
+        
+        if(!preg_match('/^[a-zA-ZščćžŠČĆŽ ]+$/', $input["priimek"]))
+            self::inputError("Priimek mora vsebovati samo črke", $input);
+        
+        if(!preg_match('/^[a-zA-ZščćžŠČĆŽ 0-9]+$/', $input["ulica"]))
+            self::inputError("Ulica mora vsebovati samo črke, presledke in številke", $input);
+        
+        /*
+        if(!preg_match('/^[0-9]+$/', $input["hisna_stevilka"]))
+            self::inputError("Hišna številka mora vsebovati samo številke", $input);
+        
+        if(!preg_match('/^[0-9]+$/', $input["postna_stevilka"]))
+            self::inputError("Poštna številka mora vsebovati samo številke", $input);
+        */
+        
+        if(!preg_match('/^[a-zA-ZščćžŠČĆŽ ]+$/', $input["posta"]))
+            self::inputError("Pošta mora vsebovati samo črke", $input);
+        
+        if(!filter_var($input["email"], FILTER_VALIDATE_EMAIL))
+            self::inputError("Format elektronskega naslova ne ustreza", $input);
+        
+        if($input["captcha"] != $input["captcha-value"])
+            self::inputError("Captcha ni ustrezna", $input);
+        
         return $result;
     }
         
     private static function getRules() {
         return [
-            'ime' => FILTER_SANITIZE_SPECIAL_CHARS,
+            'ime' => [FILTER_SANITIZE_SPECIAL_CHARS],
             'priimek' => FILTER_SANITIZE_SPECIAL_CHARS,
             'ulica' => FILTER_SANITIZE_SPECIAL_CHARS,
             'hisna_stevilka' => FILTER_SANITIZE_NUMBER_INT,
             'postna_stevilka' => FILTER_SANITIZE_NUMBER_INT,
             'posta' => FILTER_SANITIZE_SPECIAL_CHARS,
-            'email' => FILTER_SANITIZE_SPECIAL_CHARS,
+            'email' => FILTER_SANITIZE_EMAIL,
             'geslo' => FILTER_SANITIZE_SPECIAL_CHARS,
             'izbrisan' => FILTER_SANITIZE_SPECIAL_CHARS,
+            'captcha' => FILTER_SANITIZE_SPECIAL_CHARS,
+            'captcha-value' => FILTER_SANITIZE_SPECIAL_CHARS
         ];
+    }
+    
+    private static function inputError($error, $data) {
+        $values = [
+                "ime" => $data["ime"],
+                "priimek" => $data["priimek"],
+                "ulica" => $data["ulica"],
+                "hisna_stevilka" => $data["hisna_stevilka"],
+                "postna_stevilka" => $data["postna_stevilka"],
+                "posta" => $data["posta"],
+                "email" => $data["email"],
+                "geslo" => $data["geslo"],
+                "error" => $error
+            ];
+        echo ViewHelper::render("view/register.php", $values);
+        exit();
     }
 }
 
