@@ -63,6 +63,8 @@ if (!isset($_SERVER["HTTPS"]) && $_SESSION["role"] == "stranka") {
             <form action="<?= BASE_URL . "narocila/add" ?>" method="post">
                 <input type="hidden" name="cena" value="<?= $cena ?>"  />
                 <input type="hidden" name="status" value="neobdelano" />
+                <input type="hidden" name="id_stranka" value="<?= $_SESSION["id"] ?>" />
+                <input type="hidden" name="datum" value="<?= date("Y/m/d h:i:s")?>" />
                 <p><button style="margin-top: -16px;">Zaključi nakup</button></p>
             </form>   
         </div>

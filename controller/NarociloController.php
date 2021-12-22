@@ -1,13 +1,22 @@
 <?php
 
 require_once("model/NarociloDB.php");
+require_once("model/StrankaDB.php");
 require_once("model/ArtikelDB.php");
 require_once("ViewHelper.php");
 
 class NarociloController { 
     public static function index() {
+        $narocila = NarociloDB::getAll();
+        $i = 0;
+        foreach ($narocila as $narocilo):
+            $stranka = StrankaDB::get(["id_stranka" => $narocilo["id_stranka"]]);
+            $narocila[$i]["stranka_ime"] = $stranka["ime"];
+            $narocila[$i]["stranka_priimek"] = $stranka["priimek"];
+            $i++;
+        endforeach;
         echo ViewHelper::render("view/narocilo-list.php", [
-            "narocila" => NarociloDB::getAll()
+            "narocila" => $narocila
         ]);      
     }
     
@@ -31,19 +40,18 @@ class NarociloController {
     }
     
     public static function edit() {
-        $rules = self::getRules();
+        $rules = ['status' => FILTER_SANITIZE_SPECIAL_CHARS];
         $rules["id_narocilo"] = [
             'filter' => FILTER_VALIDATE_INT,
             'options' => ['min_range' => 1]
         ];
-        $rules["list"] = 123;
-        $data = filter_input_array(INPUT_POST, $rules);  
+        $data = filter_input_array(INPUT_POST, $rules); 
         if (self::checkValues($data)) {
             NarociloDB::update($data);
             $list = $data["list"];
             header("Location: https://localhost/netbeans/spletnaProdajalna/index.php/narocila?status=$list");
         } else {
-            self::editForm($data);
+            self::pregled($data);
         }
     }
     
@@ -71,7 +79,9 @@ class NarociloController {
      */
     private static function getRules() {
         return [
+            'id_stranka' => FILTER_VALIDATE_INT,
             'cena' => FILTER_VALIDATE_FLOAT,
+            'datum' => "",
             'status' => FILTER_SANITIZE_SPECIAL_CHARS,
         ];
     }

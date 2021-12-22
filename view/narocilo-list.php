@@ -46,7 +46,7 @@
         <a href="<?= BASE_URL . "narocila?status=potrjeno" ?>">Potrjena</a> |
         <a href="<?= BASE_URL . "narocila?status=preklicano" ?>">Preklicana</a>
     ]</p>
-    <?php     
+    <?php
     foreach ($narocila as $narocilo): 
         if($narocilo["status"] == $_GET["status"] || $_GET["status"] == "all" || ($narocilo["status"] == "stornirano" && $_GET["status"] == "preklicano")) {?>
         <div style="
@@ -58,29 +58,25 @@
             border: 1px solid black;
             vertical-align: top;">
                 <div style="margin-left: 20px">
+                    <p><b>Stranka: </b><?= $narocilo["stranka_ime"] ?> <?= $narocilo["stranka_priimek"] ?></p>
+                    <p><b>Datum: </b><?= $narocilo["datum"] ?></p>
                     <p><b>Cena: </b><?= $narocilo["cena"] ?>€</p>
                     <p><b>Status: </b><?= $narocilo["status"] ?></p>
                 </div>
                 
                 <div style="margin-right: 20px">
                     <form <?php if($narocilo["status"] != "neobdelano") echo "hidden" ?> action="<?= BASE_URL . "narocila/edit" ?>" method="post">
-                        <input type="hidden" name="list" value="<?= $_GET["status"] ?>" />
                         <input type="hidden" name="id_narocilo" value="<?= $narocilo["id_narocilo"] ?>" />
-                        <input type="hidden" name="cena" value="<?= $narocilo["cena"] ?>" />
                         <input type="hidden" name="status" value="potrjeno" />
                         <p><button>Potrdi</button></p>
                     </form>
                     <form  <?php if($narocilo["status"] != "neobdelano") echo "hidden" ?> action="<?= BASE_URL . "narocila/edit" ?>" method="post">
-                        <input type="hidden" name="list" value="<?= $_GET["status"] ?>" />
                         <input type="hidden" name="id_narocilo" value="<?= $narocilo["id_narocilo"] ?>" />
-                        <input type="hidden" name="cena" value="<?= $narocilo["cena"] ?>" />
                         <input type="hidden" name="status" value="preklicano" />
                         <p><button>Prekliči</button></p>
                     </form>
                     <form <?php if($narocilo["status"] != "potrjeno") echo "hidden" ?> action="<?= BASE_URL . "narocila/edit" ?>" method="post">
-                        <input type="hidden" name="list" value="<?= $_GET["status"] ?>" />
                         <input type="hidden" name="id_narocilo" value="<?= $narocilo["id_narocilo"] ?>" />
-                        <input type="hidden" name="cena" value="<?= $narocilo["cena"] ?>" />
                         <input type="hidden" name="status" value="stornirano" />
                         <p><button>Storniraj</button></p>
                     </form>

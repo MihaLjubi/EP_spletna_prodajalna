@@ -46,9 +46,12 @@ CREATE TABLE `stranka` (
 DROP TABLE IF EXISTS `narocilo`;
 CREATE TABLE `narocilo` (
   `id_narocilo` int(11) NOT NULL AUTO_INCREMENT,
+  `id_stranka` int NOT NULL,
   `cena` double,
+  `datum` datetime,
   `status` text,
-  PRIMARY KEY (`id_narocilo`)
+  PRIMARY KEY (`id_narocilo`),
+  FOREIGN KEY (`id_stranka`) REFERENCES stranka(`id_stranka`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*
@@ -73,8 +76,8 @@ INSERT INTO prodajalec VALUES (1, "Janez", "Novak", "janez.novak@gmail.com", "$2
 
 INSERT INTO stranka VALUES (1, "Bojan", "Breg", "dol", 11, 1000, "Ljubljana", "BB@gmail.com", "$2y$10$wZPtsVvUoWHRPsS35jOw5.riBZqXgzReKlP07w57OW6jqZNHWGOvm", "ne");
 
-INSERT INTO narocilo VALUES (1, 15.32, "potrjeno");
-INSERT INTO narocilo VALUES (2, 9.78, "neobdelano");
+INSERT INTO narocilo VALUES (1, 1, 15.32, "2021-12-12 10:00:00", "potrjeno");
+INSERT INTO narocilo VALUES (2, 1, 9.78, "2021-11-23 17:53:00", "neobdelano");
 
 /*
 INSERT INTO vozicek VALUES (1, 1, 2);
