@@ -158,8 +158,6 @@ class LoginController {
             $result = $result && $value != false;
         }
         
-        var_dump($input);
-        
         if(!preg_match('/^[a-zA-ZščćžŠČĆŽ ]+$/', $input["ime"]))
             self::inputError("Ime mora vsebovati samo črke", $input);
         

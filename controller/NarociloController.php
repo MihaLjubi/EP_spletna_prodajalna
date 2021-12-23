@@ -31,9 +31,7 @@ class NarociloController {
         if (self::checkValues($data)) {
             $id = NarociloDB::insert($data);
             unset($_SESSION["cart"]);
-            echo ViewHelper::render("view/artikel-list.php", [
-            "artikli" => ArtikelDB::getAll()
-            ]);
+            header("Location: https://localhost/netbeans/spletnaProdajalna/artikli");
         } else {
             self::addForm($data);
         }
@@ -45,6 +43,7 @@ class NarociloController {
             'filter' => FILTER_VALIDATE_INT,
             'options' => ['min_range' => 1]
         ];
+        $rules["list"] = [FILTER_SANITIZE_SPECIAL_CHARS];
         $data = filter_input_array(INPUT_POST, $rules); 
         if (self::checkValues($data)) {
             NarociloDB::update($data);

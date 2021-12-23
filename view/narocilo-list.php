@@ -47,7 +47,8 @@
         <a href="<?= BASE_URL . "narocila?status=preklicano" ?>">Preklicana</a>
     ]</p>
     <?php
-    foreach ($narocila as $narocilo): 
+    foreach ($narocila as $narocilo):
+        if(($_SESSION["role"] == "stranka" && $_SESSION["id"] == $narocilo["id_stranka"]) || $_SESSION["role"] == "prodajalec") {
         if($narocilo["status"] == $_GET["status"] || $_GET["status"] == "all" || ($narocilo["status"] == "stornirano" && $_GET["status"] == "preklicano")) {?>
         <div style="
             display: flex;
@@ -65,24 +66,29 @@
                 </div>
                 
                 <div style="margin-right: 20px">
-                    <form <?php if($narocilo["status"] != "neobdelano") echo "hidden" ?> action="<?= BASE_URL . "narocila/edit" ?>" method="post">
+                    <form <?php if($narocilo["status"] != "neobdelano" || $_SESSION["role"] == "stranka") echo "hidden" ?> action="<?= BASE_URL . "narocila/edit" ?>" method="post">
+                        <input type="hidden" name="list" value="<?= $_GET["status"] ?>" />
                         <input type="hidden" name="id_narocilo" value="<?= $narocilo["id_narocilo"] ?>" />
                         <input type="hidden" name="status" value="potrjeno" />
                         <p><button>Potrdi</button></p>
                     </form>
-                    <form  <?php if($narocilo["status"] != "neobdelano") echo "hidden" ?> action="<?= BASE_URL . "narocila/edit" ?>" method="post">
+                    <form  <?php if($narocilo["status"] != "neobdelano" || $_SESSION["role"] == "stranka") echo "hidden" ?> action="<?= BASE_URL . "narocila/edit" ?>" method="post">
+                        <input type="hidden" name="list" value="<?= $_GET["status"] ?>" />
                         <input type="hidden" name="id_narocilo" value="<?= $narocilo["id_narocilo"] ?>" />
                         <input type="hidden" name="status" value="preklicano" />
                         <p><button>Prekliči</button></p>
                     </form>
-                    <form <?php if($narocilo["status"] != "potrjeno") echo "hidden" ?> action="<?= BASE_URL . "narocila/edit" ?>" method="post">
+                    <form <?php if($narocilo["status"] != "potrjeno" || $_SESSION["role"] == "stranka") echo "hidden" ?> action="<?= BASE_URL . "narocila/edit" ?>" method="post">
+                        <input type="hidden" name="list" value="<?= $_GET["status"] ?>" />
                         <input type="hidden" name="id_narocilo" value="<?= $narocilo["id_narocilo"] ?>" />
                         <input type="hidden" name="status" value="stornirano" />
                         <p><button>Storniraj</button></p>
                     </form>
                 </div>             
         </div>
-        <?php } endforeach; ?>
+        <?php } 
+        
+        } endforeach; ?>
 </div>
 <script>
     <?php require_once("static/javaScript/code.js");?>

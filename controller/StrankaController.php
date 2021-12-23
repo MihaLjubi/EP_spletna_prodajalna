@@ -46,9 +46,7 @@ class StrankaController {
             $hash = password_hash($data["geslo"], PASSWORD_DEFAULT);
             $data["geslo"] = $hash;
             $id = StrankaDB::insert($data);
-            echo ViewHelper::render("view/stranka-list.php", [
-            "stranke" => StrankaDB::getAll()
-            ]);
+            header("Location: https://localhost/netbeans/spletnaProdajalna/stranke");
         } else {
             self::addForm($data);
         }

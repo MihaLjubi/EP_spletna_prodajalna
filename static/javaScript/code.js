@@ -13,7 +13,7 @@ window.onload = function() {
 };
 
 var notlogged = [artikli, artikliAdd, prodajalci, prodajalciAdd, stranke, strankeAdd, dropdown, narocila];
-var stranka = [artikliAdd, prodajalci, prodajalciAdd, stranke, strankeAdd, register, login, narocila];
+var stranka = [artikliAdd, prodajalci, prodajalciAdd, stranke, strankeAdd, register, login];
 var prodajalec = [prodajalci, prodajalciAdd, register, login];
 var admin = [register, login];
 

@@ -41,9 +41,7 @@ class ProdajalecController {
             $hash = password_hash($data["geslo"], PASSWORD_DEFAULT);
             $data["geslo"] = $hash;
             $id = ProdajalecDB::insert($data);
-            echo ViewHelper::render("view/prodajalec-list.php", [
-            "prodajalci" => ProdajalecDB::getAll()
-            ]);
+            header("Location: https://localhost/netbeans/spletnaProdajalna/prodajalci");
         } else {
             self::addForm($data);
         }
