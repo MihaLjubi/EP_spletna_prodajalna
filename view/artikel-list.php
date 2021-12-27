@@ -128,10 +128,15 @@ if ($method == "POST") {
             if(isset($_POST['minus'])) {
                 if($_SESSION["cart"][$_POST['minus']] > 0)
                     $_SESSION["cart"][$_POST['minus']]--;
+                    if($_SESSION["cart"][$_POST['minus']] == 0)
+                        unset($_SESSION["cart"][$_POST['minus']]);
                 }
             if(isset($_POST['plus'])) {
                 $_SESSION["cart"][$_POST['plus']]++;
             }
+            
+            if(empty($_SESSION["cart"]))
+                echo "Košara je prazna.";
 
             if (isset($_SESSION["cart"])) {
                 $cena = 0;
@@ -148,9 +153,7 @@ if ($method == "POST") {
                         }
                       endforeach;
                  endforeach;
-            } else {
-                echo "Košara je prazna.";
-            }            
+            }           
             ?></p>
             <p>CENA:  <?=$cena ?></p>
             <div style="display: flex;">
