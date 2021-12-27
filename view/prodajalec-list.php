@@ -1,5 +1,11 @@
 <!DOCTYPE html>
 
+<?php 
+    if (!isset($_SESSION["role"]) || $_SESSION["role"] == "stranka" || $_SESSION["role"] == "prodajalec") {
+        throw new Exception("Dostop prepovedan");
+    } 
+?>
+
 <link rel="stylesheet" type="text/css" href="<?= CSS_URL . "style.css" ?>">
 <meta charset="UTF-8" />
 <title>Prodajalci</title>
