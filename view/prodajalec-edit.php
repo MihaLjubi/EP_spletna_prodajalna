@@ -39,12 +39,17 @@
 
 <h1>Uredi prodajalca</h1>
 
+<?php if (isset($_GET['error'])) { ?>
+    <p class="error"><?php echo $_GET['error']; ?></p>
+<?php } ?>
+
 <form action="<?= BASE_URL . "prodajalci/edit" ?>" method="post">
     <input type="hidden" name="id_prodajalec" value="<?= $prodajalec["id_prodajalec"] ?>"  />
     <p><label>Ime: <input type="text" name="ime" value="<?= $prodajalec["ime"] ?>" autofocus /></label></p>
     <p><label>Priimek: <input type="text" name="priimek" value="<?= $prodajalec["priimek"] ?>" /></label></p>
     <p><label>Email: <input type="text" name="email" value="<?= $prodajalec["email"] ?>" /></label></p>
     <p><label>Geslo: <input type="text" name="geslo" value="" /></label></p>
+    <label>Posodobi geslo? <input type="checkbox" name="update_password" /></label>
     <input type="hidden" name="izbrisan" value="<?= $prodajalec["izbrisan"] ?>" />
     <p><button>Posodobi</button></p>
 </form>

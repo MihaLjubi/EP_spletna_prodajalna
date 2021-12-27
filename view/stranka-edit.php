@@ -46,6 +46,10 @@
 
 <h1>Uredi stranko</h1>
 
+<?php if (isset($_GET['error'])) { ?>
+    <p class="error"><?php echo $_GET['error']; ?></p>
+<?php } ?>
+
 <form action="<?= BASE_URL . "stranke/edit" ?>" method="post">
     <input type="hidden" name="id_stranka" value="<?= $stranka["id_stranka"] ?>"  />
     <p><label>Ime: <input type="text" name="ime" value="<?= $stranka["ime"] ?>" autofocus /></label></p>
@@ -56,6 +60,7 @@
     <p><label>Posta: <input type="text" name="posta" value="<?= $stranka["posta"] ?>" /></label></p>
     <p><label>Email: <input type="text" name="email" value="<?= $stranka["email"] ?>" /></label></p>
     <p><label>Geslo: <input type="text" name="geslo" value="" /></label></p>
+    <label>Posodobi geslo? <input type="checkbox" name="update_password" /></label>
     <input type="hidden" name="izbrisan" value="<?= $stranka["izbrisan"] ?>" />
     <p><button>Posodobi</button></p>
 </form>

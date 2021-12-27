@@ -41,6 +41,7 @@ class LoginController {
                                 $_SESSION['id'] = $prodajalec["id_prodajalec"];
                                 $_SESSION['ime'] = $prodajalec["ime"];
                                 $_SESSION['priimek'] = $prodajalec["priimek"];
+                                $_SESSION['geslo'] = $prodajalec["geslo"];
                                 if($prodajalec["email"] == 'admin@admin')
                                     $_SESSION['role'] = "admin";
                                 else
@@ -58,6 +59,7 @@ class LoginController {
                             $_SESSION['id'] = $stranka["id_stranka"];
                             $_SESSION['ime'] = $stranka["ime"];
                             $_SESSION['priimek'] = $stranka["priimek"];
+                            $_SESSION['geslo'] = $prodajalec["geslo"];
                             $_SESSION['role'] = "stranka";
                             header("Location: artikli");
                         }
