@@ -71,8 +71,8 @@ INSERT INTO artikel VALUES (1, "Specialized Gorsko kolo", 1450, "Žensko gorsko 
 INSERT INTO artikel VALUES (2, "FISCHER F18 smuči", 414.5, "Smuči se ponašajo s sistemom Dual Radius System – prvi del smuči ima polmer kroga (manjši radij), slalomski lok, ki omogoča enostaven in hiter vstop v ovinek, medtem ko ima drugi del smuči polmer elipse ( večji radij), veleslalomski lok, ki zagotavlja odlično stabilnost pri velikih hitrostih in daljših zavojih.", "ne");
 INSERT INTO artikel VALUES (3, "Babolat Pure Aero", 174.95, "Opremljen je z Novim Cortex Pure Feel sistemom, ki odlično duši vibracije, obenem pa omogoča tudi neverjeten zvok in še izboljšan občutek pri udarcu. Rezultat nove generacije kvalitetnih karbonskih vlaken, vgrajenih v strukturo loparja (CARBON PLY STABILIZER), je izboljšana stabilnost in veliko večja kontrola kot pri prejšnjem modelu.", "ne");
 
-INSERT INTO prodajalec VALUES (999, "Admin", "", "admin@admin", "$2y$10$j0/k1IJ.9rQkyPMiO///pOk1.ts7rXjhjgbAeXnoBANC/V60kszlG", "ne");
-INSERT INTO prodajalec VALUES (1, "Janez", "Novak", "janez.novak@gmail.com", "$2y$10$co3uQbO4Fy2By9kXJ58HguDQI9ZPuN2qaj7V5M2Bi0ZQlx6fZrqnK", "ne");
+INSERT INTO prodajalec VALUES (999, "Admin", "", "admin@sp.si", "$2y$10$j0/k1IJ.9rQkyPMiO///pOk1.ts7rXjhjgbAeXnoBANC/V60kszlG", "ne");
+INSERT INTO prodajalec VALUES (1, "Janez", "Novak", "janez@sp.si", "$2y$10$co3uQbO4Fy2By9kXJ58HguDQI9ZPuN2qaj7V5M2Bi0ZQlx6fZrqnK", "ne");
 
 INSERT INTO stranka VALUES (1, "Bojan", "Breg", "dol", 11, 1000, "Ljubljana", "BB@gmail.com", "$2y$10$wZPtsVvUoWHRPsS35jOw5.riBZqXgzReKlP07w57OW6jqZNHWGOvm", "ne");
 

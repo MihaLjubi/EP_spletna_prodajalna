@@ -20,7 +20,7 @@
         <a href="javascript:void(0)" class="dropbtn"><?php if(isset($_SESSION["ime"])) echo $_SESSION["ime"] ?> <?php if(isset($_SESSION["priimek"])) echo $_SESSION["priimek"] ?></a>
         <div class="dropdown-content">
             <a href="
-                    <?php 
+                    <?php                    
                         if($_SESSION["role"] == "prodajalec" || $_SESSION["role"] == "admin") {
                             echo BASE_URL . "prodajalci/edit?id_prodajalec=" . $_SESSION["id"];
                         } else {

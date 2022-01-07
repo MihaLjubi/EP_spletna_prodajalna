@@ -27,7 +27,7 @@ class LoginController {
                     header("Location: login?error=Vnesite geslo");
                     exit();
                 }else{
-                    $authorized_users = ["Admin", "Janez"];
+                    $authorized_users = ["Admin", "Janez", "Ana"];
                     $client_cert = filter_input(INPUT_SERVER, "SSL_CLIENT_CERT");
                     $cert_data = openssl_x509_parse($client_cert);
                     $commonname = $cert_data['subject']['CN'];
@@ -38,11 +38,18 @@ class LoginController {
                         if($prodajalec["email"] === $email && password_verify($geslo, $prodajalec["geslo"])) {
                             $found = true;
                             if (in_array($commonname, $authorized_users)) {
+                                var_dump($cert_data['subject']['emailAddress']);
+                                var_dump($prodajalec["email"]);
+                                var_dump($cert_data['subject']['emailAddress'] != $prodajalec["email"]);
+                                if($cert_data['subject']['emailAddress'] != $prodajalec["email"]) {
+                                    header("Location: login?error=Izberite ustrezno digitalno potrdilo");
+                                    exit();
+                                }
                                 $_SESSION['id'] = $prodajalec["id_prodajalec"];
                                 $_SESSION['ime'] = $prodajalec["ime"];
                                 $_SESSION['priimek'] = $prodajalec["priimek"];
                                 $_SESSION['geslo'] = $prodajalec["geslo"];
-                                if($prodajalec["email"] == 'admin@admin')
+                                if($prodajalec["email"] == 'admin@sp.si')
                                     $_SESSION['role'] = "admin";
                                 else
                                     $_SESSION['role'] = "prodajalec";
